@@ -2,7 +2,7 @@ import "../Css-files/home.css"
 import facade from "../apiFacade"
 import MySearchSite from "./MySearchSite"
 import React, { useEffect, useState } from 'react';
-import ReactDom from "react-dom";
+
 
 export default function Home() {
 
