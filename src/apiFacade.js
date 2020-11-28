@@ -3,6 +3,7 @@ import links from "./settings";
 const URL = links.server;
 const otherURL = links.otherServer;
 
+
 function apiFacade() {
   //............Demo Package..............\\
   const getDemoPack = () => {

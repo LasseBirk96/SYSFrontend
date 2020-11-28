@@ -1,6 +1,6 @@
 function URL() {
   return {
-    server: "http://localhost:8080/sem3",
+    server: "https://dgpcoding.com/SYS/",
     otherServer: "https://jsonplaceholder.typicode.com/users/"
   };
 }
