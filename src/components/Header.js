@@ -1,5 +1,5 @@
 import { NavLink, useHistory } from "react-router-dom";
-import "../Css-files/home.css"
+import "../Css-files/home.css";
 export default function Header({ loggedIn, admin, logout }) {
   const history = useHistory();
 
@@ -9,31 +9,25 @@ export default function Header({ loggedIn, admin, logout }) {
     history.push("/");
   }
 
-
- 
-
-
-
   return (
-     
     <ul className="header">
       {!admin ? (
         <li>
           <NavLink activeClassName="active" to="/home">
-            <div className="logo"> 
-            TRAVELEAT
-            </div>
+            <div className="logo">TRAVELEAT</div>
           </NavLink>
         </li>
       ) : (
         ""
       )}
-       {!admin && !loggedIn ? (
+      {!admin && !loggedIn ? (
         <li>
-         <NavLink activeClassName="active" to="/register">
+          <NavLink activeClassName="active" to="/register">
             Register
           </NavLink>
-          
+          <NavLink activeClassName="active" to="/flight">
+            Flights
+          </NavLink>
         </li>
       ) : (
         ""
@@ -43,11 +37,11 @@ export default function Header({ loggedIn, admin, logout }) {
           <NavLink activeClassName="active" to="/login">
             Log in
           </NavLink>
-      </li>
+        </li>
       ) : (
         ""
       )}
-     
+
       {loggedIn && !admin ? (
         <li>
           <NavLink activeClassName="active" to="/account">
@@ -57,7 +51,7 @@ export default function Header({ loggedIn, admin, logout }) {
       ) : (
         ""
       )}
-      
+
       {admin ? (
         <li>
           <NavLink activeClassName="active" to="/orders">
@@ -86,7 +80,6 @@ export default function Header({ loggedIn, admin, logout }) {
         ""
       )}
 
-    
       {admin || loggedIn ? (
         <li>
           <button className="active" onClick={onClick}>

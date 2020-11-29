@@ -3,7 +3,6 @@ import links from "./settings";
 const URL = links.server;
 const otherURL = links.otherServer;
 
-
 function apiFacade() {
   //............Demo Package..............\\
   const getDemoPack = () => {
@@ -57,6 +56,11 @@ function apiFacade() {
     return fetch(otherURL, options).then(handleHttpErrors);
   };
 
+  const findFlights = (flight) => {
+    const options = makeOptions("POST", false, flight);
+    return fetch(URL + links.flights, options).then(handleHttpErrors);
+  };
+
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -83,7 +87,8 @@ function apiFacade() {
     fetchData,
     getDemoPack,
     registerUser,
-    fetchDummyData
+    fetchDummyData,
+    findFlights,
   };
 }
 const facade = apiFacade();

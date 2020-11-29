@@ -1,6 +1,5 @@
-import { useEffect, useState, Button, Form } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Row, Container, Col } from "react-bootstrap";
 
 export default function Register({ facade, init }) {
   const [newUser, setNewUser] = useState(init);
