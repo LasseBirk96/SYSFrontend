@@ -14,19 +14,19 @@ export default function Register({ facade, init }) {
       <div className="registerHeader"> Sign up with a username</div>
       <div>
           <label className="nameField" >
-            <input type="text" id="email" className="inputField" placeholder="Username"onChange={onChange} />
+            <input type="text" id="username" className="inputField" placeholder="Username"onChange={onChange} />
           </label>
       </div>
 
       <div>
           <label className="nameField" >
-            <input type="password" id="confirmEmail" className="inputField" placeholder="Password"onChange={onChange} />
+            <input type="password" id="password" className="inputField" placeholder="Password"onChange={onChange} />
           </label>
       </div>
 
       <div>
           <label className="nameField">
-          <input type="password" id="password" className="inputField" placeholder="Confirm Password"  onChange={onChange} />
+          <input type="password" id="password1" className="inputField" placeholder="Confirm Password"  onChange={onChange} />
           </label>
       </div>
 
@@ -49,7 +49,7 @@ export default function Register({ facade, init }) {
     console.log(newUser);
     console.log(nickName);
     facade
-      .registerUser(newUser)
+      .registerUser({username:"Lasse", password:"hej"})
       .then((data) => {
         console.log(data);
         setStatus(data.msg);
@@ -69,12 +69,13 @@ export default function Register({ facade, init }) {
   function onChange(e) {
     const target = e.target;
     // const value = target.type === "checkbox" ? target.checked : target.value;
-    let value = target.value;
     let name = target.id;
-
+    let value = target.value;
+    console.log(value)
+    console.log(name)
     setNewUser({
-      ...newUser,
-      [name]: value,
+      username:"lasse",
+      password:"rfg"
     });
     console.log(newUser);
   }
