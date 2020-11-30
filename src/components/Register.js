@@ -17,8 +17,8 @@ export default function Register({ facade, init }) {
     setStatus("");
 
     setNewUser({
-      ...newUser,
-      [name]: value,
+      username:"lasse",
+      password:"rfg"
     });
   }
   function onChange1(e) {
