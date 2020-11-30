@@ -1,7 +1,9 @@
 function URL() {
   return {
-    server: "https://dgpcoding.com/SYS/",
-    otherServer: "https://jsonplaceholder.typicode.com/users/"
+    server: "https://dgpcoding.com/SYS",
+    otherServer: "https://jsonplaceholder.typicode.com/users/",
+    airports: "/api/flight/allairports",
+    flights: "/api/flight/findflights",
   };
 }
 const url = URL();
