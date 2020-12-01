@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import facade from "../apiFacade";
 import links from "../settings";
-import FlightSearcher from "./FlightSearcher";
+import FlightSearcher from "./Flights/FlightSearcher";
 
 export default function Flight({}) {
   const loader = <div className="loader"></div>;

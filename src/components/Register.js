@@ -1,3 +1,4 @@
+import "../Css-files/flight.css"
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 

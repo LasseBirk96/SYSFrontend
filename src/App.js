@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Css-files/Register.css"
+import "./Css-files/Register.css";
 
 import {
   BrowserRouter as Router,
@@ -9,21 +9,15 @@ import {
 } from "react-router-dom";
 import facade from "./apiFacade";
 import LogIn from "./components/LogIn";
-import LoggedIn from "./components/LoggedIn";
-import Flight from "./components/Flight"
+import Flights from "./components/Flights";
 import Home from "./components/Home";
-import Offer from "./components/Offer";
-import Package from "./components/Package";
 import Header from "./components/Header";
 import Register from "./components/Register";
-import NewPack from "./components/NewPack";
 import Account from "./components/Account";
 import Orders from "./components/Orders";
 import Users from "./components/Users";
 import Statistics from "./components/Statistics";
 import Restaurant from "./components/Restaurant";
-import MySearchSite from "./components/MySearchSite";
-
 
 function App() {
   const init = { username: "", password: "" };
@@ -37,7 +31,6 @@ function App() {
     setLoggedIn(false);
     setAdmin(false);
     setActiveUser("anonym");
-   
   };
   const login = (user, pass) => {
     facade
@@ -56,21 +49,17 @@ function App() {
       });
   };
 
-
-
-
-
-console.log("Admin status: "+admin+"  loggedIn status: "+loggedIn)
+  console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (
     <Router>
       <div className="App">
         <Header loggedIn={loggedIn} admin={admin} logout={logout} />
         <Switch>
           <Route exact path="/">
-            <Home  />
+            <Home />
           </Route>
           <Route exact path="/flight">
-            <Flight />
+            <Flights />
           </Route>
           <Route exact path="/restaurant">
             <Restaurant />
@@ -133,15 +122,11 @@ function NoMatch() {
 
   return (
     <div>
-      <h3 >
+      <h3>
         No match for <code>{location.pathname}</code>
       </h3>
     </div>
   );
 }
-
-
-
-
 
 export default App;

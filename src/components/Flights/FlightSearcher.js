@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
+import Airport from "./Airport";
+import Flight from "./Flight";
+import FlightList from "./FlightList";
 
-export default function Sugestion({ airports, facade }) {
+export default function FLightSearcher({ airports, facade }) {
   const initFlight = {
     dep_code: "",
     arr_code: "",
     date: "",
   };
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("");
   const [flight, setFlight] = useState(initFlight);
   const [sugestions, setSugest] = useState([]);
   const [loading, setLoad] = useState(false);
   const [resultList, setResults] = useState([]);
   const [startFetch, setStart] = useState();
-  const [waitingFlights, setWaiting] = useState(false);
+  const [placeHolderArr, setHolderArr] = useState("To (IATA-code)");
+  const [placeHolderDep, setHolderDep] = useState("From (IATA-code)");
+  const [depValue, setDepValue] = useState("");
+  const [arrValue, setArrValue] = useState("");
+  const [currentInput, setCurrentInput] = useState();
   const loader = <div className="loader"></div>;
 
   function onCodeChange(e) {
     setStatus("");
+    setCurrentInput(e.target);
 
     const value = e.target.value;
     const name = e.target.id;
@@ -44,7 +52,7 @@ export default function Sugestion({ airports, facade }) {
 
   function onSubmit(e) {
     e.preventDefault();
-    setLoad(false)
+    setLoad(false);
     let save = true;
     console.log("searching for flights...");
     console.log(flight);
@@ -81,7 +89,10 @@ export default function Sugestion({ airports, facade }) {
           console.log(resultList);
           console.log(data);
         })
-        .then(setLoad(false))
+        .then(() => {
+          setLoad(false);
+          setStart(false);
+        })
         .catch((err) => {
           if (err.status) {
             err.fullError.then((e) => setStatus(e.message));
@@ -100,11 +111,16 @@ export default function Sugestion({ airports, facade }) {
     let tmpArr = [];
     const value = e.target.value;
     const name = e.target.id;
+    let count = 0;
 
     if (value.length >= 1) {
       airports.forEach((a) => {
         if (a.code.startsWith(value.toUpperCase())) {
-          tmpArr.push(<li key={a.code}>{a.code}</li>);
+          count++;
+          console.log("count: " + count);
+          tmpArr.push(
+            <Airport airport={a} key={count} onClickFunction={clickOnAirport} />
+          );
           if (value.length === 3) {
             setFlight({
               ...flight,
@@ -116,6 +132,25 @@ export default function Sugestion({ airports, facade }) {
       });
     }
     setSugest(tmpArr);
+  }
+
+  function clickOnAirport(event) {
+    event.preventDefault();
+    let inputTarget = currentInput;
+    console.log(event.currentTarget);
+    let id = event.currentTarget.id;
+    console.log("id: " + id);
+    console.log("airports list has objects: " + airports.length);
+    console.log("sugestions list has objects: " + sugestions.length);
+    console.log(sugestions);
+    let chosenAirp = airports.filter((arp) => id === arp.code)[0];
+    console.log("Clicked airport is:");
+    console.log(chosenAirp);
+    //console.log(chosenAirp.code);
+    let airpString =
+      chosenAirp.code + ", " + chosenAirp.city + ", " + chosenAirp.country;
+
+    inputTarget.value = airpString;
   }
 
   var today = new Date();
@@ -138,20 +173,24 @@ export default function Sugestion({ airports, facade }) {
         <div>
           <div className="result">
             <input
+              className="tableContent"
               type="text"
               id="dep_code"
               maxLength={3}
-              placeholder="From(IATA-code)"
+              placeholder={placeHolderDep}
+              value={depValue}
               onChange={onCodeChange}
             />
             <input
+              className="tableContent"
               type="text"
               id="arr_code"
               maxLength={3}
-              placeholder="To(IATA-code)"
+              placeholder={placeHolderArr}
               onChange={onCodeChange}
             />
             <input
+              className="tableContent"
               type="date"
               min={today}
               max={lastDay}
@@ -159,18 +198,51 @@ export default function Sugestion({ airports, facade }) {
               placeholder="Date"
               onChange={onDateChange}
             />
-            <button type="button" onClick={onSubmit}>
+            <button
+              type="button"
+              className="tableContent"
+              style={{ textAlign: "center", fontWeight: "bold" }}
+              onClick={onSubmit}
+            >
               Search
             </button>
+            {sugestions}
           </div>
 
-          <div id="result" className="result">
-            {status !== "" ? status : sugestions}
-          </div>
+          {status !== "" ? (
+            <div id="result" className="result">
+              {" "}
+              {status}{" "}
+            </div>
+          ) : (
+            ""
+          )}
+
           {loading ? (
             <div className="result">{loader} </div>
           ) : (
-            <div className="result">{resultList.length}</div>
+            <div>
+              {resultList.length === 0 ? (
+                <div className="result">
+                  {" "}
+                  <div
+                    className="tableContent"
+                    style={{ textAlign: "center", fontWeight: "bold" }}
+                  >
+                    No results found
+                  </div>
+                </div>
+              ) : (
+                <div className="result">
+                  {" "}
+                  {resultList.map((f) => (
+                    <button key={resultList.indexOf(f)}>
+                      <Flight flight={f} />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
