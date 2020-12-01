@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 
 export default function Airport({ airport, onClickFunction }) {
-  console.log(" in Airport:");
-  console.log(airport);
+ 
 
   return (
     <button
@@ -19,7 +18,7 @@ export default function Airport({ airport, onClickFunction }) {
               <td style={{ width: "70%" }}>
                 {airport.city}, {airport.country}
               </td>
-              <th style={{ width: "30%" }} rowspan="2">
+              <th style={{ width: "30%" }} rowSpan="2">
                 {airport.code}
               </th>
             </tr>

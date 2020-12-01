@@ -1,6 +1,6 @@
 export default function FlightList({ flight }) {
   return (
-    <div className="tableContent">
+    <div className="tableContent" >
       <table style={{ width: "100%" }}>
         <tr style={{ textAlign: "center" }}>
           <td
