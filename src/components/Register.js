@@ -1,14 +1,15 @@
-import "../Css-files/flight.css"
-import { useState } from "react";
+import "../Css-files/flight.css";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function Register({ facade, init }) {
+export default function Register({ facade, init, login }) {
   const [newUser, setNewUser] = useState(init);
   const [status, setStatus] = useState("");
   const [nickName, setNickName] = useState("Stranger");
   const [pass2, setPass2] = useState("");
   const history = useHistory();
   const [monted, setMonted] = useState(false);
+  const [regiterOk, setRegisterOk] = useState(false);
 
   function onChange(e) {
     const target = e.target;
@@ -18,8 +19,8 @@ export default function Register({ facade, init }) {
     setStatus("");
 
     setNewUser({
-      username:"lasse",
-      password:"rfg"
+      ...newUser,
+      [name]: value,
     });
   }
   function onChange1(e) {
@@ -55,10 +56,27 @@ export default function Register({ facade, init }) {
             })
         : setStatus("passwords did not match");
     }
-    if (monted) {
-      history.push("/login");
-    }
   }
+  function logIn() {
+    console.log("logIn in register");
+    setTimeout(function () {
+      if (monted) {
+        console.log("mounted");
+        console.log(newUser.username + " . " + newUser.password);
+        console.log(status);
+        login(newUser.username, newUser.password);
+        newUser.username !== "admin"
+          ? history.push("/")
+          : history.push("/statistics");
+      }
+    }, 3000);
+    return function cleanup() {
+      setMonted(false);
+      setRegisterOk(true);
+    };
+  }
+
+  useEffect(logIn, [monted]);
 
   return (
     <div>
@@ -69,63 +87,56 @@ export default function Register({ facade, init }) {
         </h2>
       </div>
       <form className="registerContainer" onSubmit={onSubmit}>
-        <div className="registerHeader"> Sign up with a username</div>
-        <div>
-          <label className="nameField">
-            <input
-              type="text"
-              id="username"
-              className="inputField"
-              placeholder="Username"
-              onChange={onChange}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label className="nameField">
-            <input
-              type="password"
-              id="password"
-              className="inputField"
-              placeholder="Password"
-              onChange={onChange}
-            />
-          </label>
-        </div>
-
-        <div>
-          <label className="nameField">
-            <input
-              type="password"
-              id="password1"
-              className="inputField"
-              placeholder="Confirm Password"
-              onChange={onChange1}
-            />
-          </label>
-        </div>
-
-        <div className="DoB">
-          Date of Birth:
-          <label className="nameField">
-            <input
-              type="date"
-              id="dateOfBirth"
-              className="inputField"
-              onChange={onChange}
-            />
-          </label>
-        </div>
-
-        <div>
-          <input className="makeButton" type="submit" value="Sign Up" />
-        </div>
+        {regiterOk ? (
+          <div>
+            <h3>{status}</h3>
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <div>
+            <div className="registerHeader"> Sign up here</div>
+            <div>
+              <label className="nameField">
+                <input
+                  type="text"
+                  id="username"
+                  className="inputField"
+                  placeholder="Username"
+                  onChange={onChange}
+                />
+              </label>
+            </div>
+            <div>
+              <label className="nameField">
+                <input
+                  type="password"
+                  id="password"
+                  className="inputField"
+                  placeholder="Password"
+                  onChange={onChange}
+                />
+              </label>
+            </div>
+            <div>
+              <label className="nameField">
+                <input
+                  type="password"
+                  id="password1"
+                  className="inputField"
+                  placeholder="Confirm Password"
+                  onChange={onChange1}
+                />
+              </label>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <label className="nameField">{status}</label>
+            </div>
+            <div>
+              <input className="makeButton" type="submit" value="Sign Up" />
+            </div>{" "}
+          </div>
+        )}
       </form>
-
-      <div>
-        <h1 className="statusMessage">{status}</h1>
-      </div>
     </div>
   );
 }

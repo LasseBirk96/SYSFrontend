@@ -39,6 +39,7 @@ function App() {
         user !== "admin" ? setLoggedIn(true) : setAdmin(true);
         setActiveUser(user);
       })
+      .then(console.log("logged in"))
       .catch((err) => {
         if (err.status) {
           err.fullError.then((e) => setErrMsg(e.message));
@@ -66,7 +67,7 @@ function App() {
           </Route>
           {!loggedIn ? (
             <Route exact path="/register">
-              <Register facade={facade} init={init} />
+              <Register facade={facade} init={init} login={login} />
             </Route>
           ) : (
             ""
