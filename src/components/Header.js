@@ -1,5 +1,6 @@
 import { NavLink, useHistory } from "react-router-dom";
 import "../Css-files/home.css";
+import imgTrip from "../img/trip.png";
 export default function Header({ loggedIn, admin, logout }) {
   const history = useHistory();
 
@@ -89,6 +90,10 @@ export default function Header({ loggedIn, admin, logout }) {
       ) : (
         ""
       )}
+      <div>
+        {" "}
+        <img src={imgTrip} style={{ alignSelf: "right" }} height={55} />
+      </div>
     </ul>
   );
 }

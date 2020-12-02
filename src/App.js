@@ -49,6 +49,9 @@ function App() {
         }
       });
   };
+  function addToTrip(flight, restaurant){
+
+  }
 
   console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (
