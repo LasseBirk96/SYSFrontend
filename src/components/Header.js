@@ -1,7 +1,13 @@
 import { NavLink, useHistory } from "react-router-dom";
 import "../Css-files/home.css";
 import imgTrip from "../img/trip.png";
-export default function Header({ loggedIn, admin, logout, fquantity, rquantity }) {
+export default function Header({
+  loggedIn,
+  admin,
+  logout,
+  fquantity,
+  rquantity,
+}) {
   const history = useHistory();
 
   function onClick(e) {
@@ -107,7 +113,7 @@ export default function Header({ loggedIn, admin, logout, fquantity, rquantity }
                 color: "rgb(0, 217, 255)",
               }}
             >
-              1
+              {fquantity < 1 ? "" : fquantity}
             </div>
             <div
               className="col-6"
@@ -117,7 +123,7 @@ export default function Header({ loggedIn, admin, logout, fquantity, rquantity }
                 color: "rgb(0, 217, 255)",
               }}
             >
-              2
+              {rquantity < 1 ? "" : rquantity}
             </div>
           </div>
         </div>

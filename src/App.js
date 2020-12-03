@@ -94,7 +94,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header loggedIn={loggedIn} admin={admin} logout={logout} />
+        <Header
+          loggedIn={loggedIn}
+          admin={admin}
+          logout={logout}
+          rquantity={restaurants.length}
+          fquantity={flights.length}
+        />
         <Switch>
           <Route exact path="/">
             <Home />
