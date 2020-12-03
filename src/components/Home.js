@@ -13,7 +13,7 @@ export default function Home() {
         <span className="logo">TravelEat </span> help!{" "}
       </h1>
       <div>
-        <MySearchSite />
+        <MySearchSite/>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Airport from "./Airport";
 import Flight from "./Flight";
+import "../../Css-files/FlightSearcher.css";
 
 import arrows from "../../img/arrows.png";
 
@@ -92,8 +93,8 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           setLoad(false);
           setStart(false);
           setNoFlights(
-            <div className="result" key="flightsDiv">
-              {" "}
+            <div key="flightsDiv">
+              
               No available flights for given date
             </div>
           );
@@ -216,13 +217,14 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
   today = yyyy + "-" + mm + "-" + dd;
   var lastDay = yyyy + 1 + "-" + mm + "-" + dd;
 
+
+
   return (
-    <div className="container-fluid">
-      <div className="wrapper">
+    <div className="flightContainer">
         <div key="inputDiv">
-          <div className="result" key="input">
+          <div className="flightNavbar" key="input">
             <input
-              className="tableContent"
+              className="flightInputField"
               type="text"
               id="dep_code"
               key="dep_code"
@@ -236,7 +238,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
             />
             <button
               type="button"
-              className="tableContent"
+              className="flightInputField"
               style={{ textAlign: "center", fontWeight: "bold" }}
               onClick={swapAirports}
             >
@@ -244,11 +246,10 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
                 src={arrows}
                 alt={"logo"}
                 height="20"
-                style={{ padding: "0 ", margin: 0 }}
               />
             </button>
             <input
-              className="tableContent"
+              className="flightInputField"
               type="text"
               id="arr_code"
               key="arr_code"
@@ -261,7 +262,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
               }}
             />
             <input
-              className="tableContent"
+              className="flightInputField"
               type="date"
               min={today}
               max={lastDay}
@@ -275,7 +276,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
             />
             <button
               type="button"
-              className="tableContent"
+              className="flightInputField"
               style={{ textAlign: "center", fontWeight: "bold" }}
               onClick={onSubmit}
             >
@@ -285,7 +286,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           </div>
 
           {status !== "" ? (
-            <div key="resultStatus" className="result">
+            <div key="resultStatus" className="fligtStatusMessage">
               {status}
             </div>
           ) : (
@@ -293,7 +294,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           )}
 
           {loading ? (
-            <div className="result" key="loaderDiv">
+            <div className="flightInputField" key="loaderDiv">
               {loader}
               {""}
             </div>
@@ -305,13 +306,10 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
                 ) : resultMsg !== "" ? (
                   ""
                 ) : (
-                  <div className="result" key="resultMsg">
-                    <div
-                      className="tableContent"
-                      style={{ textAlign: "center", fontWeight: "bold" }}
-                    >
+                  <div className="flightTableContent" key="resultMsg">
+                   
                       {resultMsg}
-                    </div>
+              
                   </div>
                 )
               ) : (
@@ -321,25 +319,10 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
               {resultList.length === 0 ? (
                 noFlightsFound
               ) : (
-                <div className="result" key="flightsDiv">
+                <div key="flightsDiv">
                   {resultList.map((f) => (
-                    <button
-                      className="container"
-                      style={{
-                        outline: "none",
-                        padding: "10px 15px",
-                        textAlign: "center",
-                        border: "1px solid rgb(0, 217, 255)",
-                        marginBottom: "0, 5px",
-                        borderRadius: "10px",
-
-                        cursor: "pointer",
-                        backgroundColor: "white",
-                      }}
-                      onClick={(e) => clickOnFlight(e, f)}
-                      key={resultList.indexOf(f)}
-                    >
-                      <Flight
+                    <button onClick={(e) => clickOnFlight(e, f)} key={resultList.indexOf(f)}>
+                      <Flight 
                         key={resultList.indexOf(f) + 15000}
                         flight={f}
                         airports={airports2}
@@ -352,6 +335,6 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           )}
         </div>
       </div>
-    </div>
+
   );
 }
