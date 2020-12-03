@@ -4,7 +4,7 @@ import Flight from "./Flight";
 
 import arrows from "../../img/arrows.png";
 
-export default function FLightSearcher({ airports, facade }) {
+export default function FLightSearcher({ airports, facade, chooseFlight }) {
   const initFlight = {
     dep_code: "",
     arr_code: "",
@@ -194,6 +194,13 @@ export default function FLightSearcher({ airports, facade }) {
     inputTargets.forEach((t) => console.log(t.value));
     console.log(flight);
   }
+  function clickOnFlight(e, f) {
+    e.preventDefault();
+    console.log("add fight to trip");
+
+    chooseFlight(f);
+    console.log("added fight to trip");
+  }
 
   var today = new Date();
   var dd = today.getDate();
@@ -329,9 +336,14 @@ export default function FLightSearcher({ airports, facade }) {
                         cursor: "pointer",
                         backgroundColor: "white",
                       }}
+                      onClick={(e) => clickOnFlight(e, f)}
                       key={resultList.indexOf(f)}
                     >
-                      <Flight flight={f} airports={airports2} />
+                      <Flight
+                        key={resultList.indexOf(f) + 15000}
+                        flight={f}
+                        airports={airports2}
+                      />
                     </button>
                   ))}
                 </div>

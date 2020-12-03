@@ -1,7 +1,7 @@
 import { NavLink, useHistory } from "react-router-dom";
 import "../Css-files/home.css";
 import imgTrip from "../img/trip.png";
-export default function Header({ loggedIn, admin, logout }) {
+export default function Header({ loggedIn, admin, logout, fquantity, rquantity }) {
   const history = useHistory();
 
   function onClick(e) {
@@ -86,17 +86,43 @@ export default function Header({ loggedIn, admin, logout }) {
 
       {admin || loggedIn ? (
         <li>
-          <button className="active" onClick={onClick}>
+          <button className="tableContent" onClick={onClick}>
             Log out
           </button>
         </li>
       ) : (
         ""
       )}
-      <div>
-        {" "}
-        <img src={imgTrip} style={{ alignSelf: "right" }} height={55} />
-      </div>
+      <li>
+        <div className="container-fluid" style={{ backgroundImage: imgTrip }}>
+          <div className="row">
+            <img src={imgTrip} style={{ alignSelf: "right" }} height={55} />
+          </div>
+          <div className="row">
+            <div
+              className="col-6"
+              style={{
+                marginTop: "-15px",
+                textAlign: "left",
+                color: "rgb(0, 217, 255)",
+              }}
+            >
+              1
+            </div>
+            <div
+              className="col-6"
+              style={{
+                marginTop: "-15px",
+                textAlign: "right",
+                color: "rgb(0, 217, 255)",
+              }}
+            >
+              2
+            </div>
+          </div>
+        </div>
+      </li>
+      <div> </div>
     </ul>
   );
 }

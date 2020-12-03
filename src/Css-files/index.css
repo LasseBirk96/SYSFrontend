@@ -1,5 +1,5 @@
 body {
-  background-color:	#23063f;
+  background-color: #23063f;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -17,8 +17,8 @@ ul.header {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color:	#150327;
-  font-family: 'Work Sans', sans-serif;
+  background-color: #150327;
+  font-family: "Work Sans", sans-serif;
 }
 
 ul.header li {
@@ -26,12 +26,11 @@ ul.header li {
 }
 
 ul.header li a {
-  display: block;
+  display: inline;
   color: rgb(255, 255, 255);
   text-align: center;
   padding: 14px 40px;
   text-decoration: none;
-  
 }
 ul.header li a:hover:not(.active) {
   color: orange;

@@ -15,12 +15,23 @@ export default function Flight({ flight, airports }) {
   }
   function convertDate(dateString) {
     let date = new Date(dateString);
-    console.log(date);
-    let newString = date.getHours() + ":" + date.getMinutes() + " local time";
+    let h = "HH";
+    let m = "MM";
+    if (date.getHours() < 10) {
+      h = "0" + date.getHours();
+    } else {
+      h = date.getHours();
+    }
+    if (date.getMinutes() < 10) {
+      m = "0" + date.getMinutes();
+    } else {
+      m = date.getMinutes();
+    }
+    let newString = h + ":" + m + " local time";
     return newString;
   }
   return (
-    <div className="container-fluid" >
+    <div className="container-fluid">
       <div className="row">
         <div className="col-2">{flight.departure.iata}</div>
         <div className="col-8">{flight.flight_date}</div>

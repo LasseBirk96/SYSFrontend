@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Css-files/Register.css";
+import links from "./settings";
 
 import {
   BrowserRouter as Router,
@@ -26,6 +27,11 @@ function App() {
   const [errorMsg, setErrMsg] = useState("");
   const [activeUser, setActiveUser] = useState("");
   const [admin, setAdmin] = useState(false);
+  const [flights, setFLights] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [airports, setAirports] = useState([]);
 
   const logout = () => {
     facade.logout();
@@ -50,7 +56,39 @@ function App() {
         }
       });
   };
-  function addToTrip(flight, restaurant) {}
+  function addFlightToTrip(flight) {
+    setFLights([...flights, flight]);
+  }
+
+  useEffect(() => {
+    let mounted = true;
+
+    facade
+      .fetchData(links.airports)
+      .then((data) => {
+        for (const airp of data) {
+          airports.push(airp);
+        }
+
+        console.log("airports");
+        console.log(airports);
+      })
+      .then(() => {
+        if (mounted) {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (err.status) {
+          err.fullError.then((e) => console.log(e.message));
+        } else {
+          console.log("Network error! Could not load airports");
+        }
+      });
+    return function cleanup() {
+      mounted = false;
+    };
+  }, []);
 
   console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (
@@ -62,10 +100,14 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/flight">
-            <Flights />
+            <Flights addFlight={addFlightToTrip} />
           </Route>
           <Route exact path="/trip">
-            <Trip />
+            <Trip
+              flights={flights}
+              restaurants={restaurants}
+              airports={airports}
+            />
           </Route>
           <Route exact path="/restaurant">
             <Restaurant />

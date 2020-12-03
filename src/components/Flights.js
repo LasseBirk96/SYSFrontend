@@ -3,12 +3,16 @@ import facade from "../apiFacade";
 import links from "../settings";
 import FlightSearcher from "./Flights/FlightSearcher";
 
-export default function Flight({}) {
+export default function Flight({ addFlight }) {
   const loader = <div className="loader"></div>;
-  const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("");
+const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
 
+  function addToFlights(flight) {
+    console.log("flight adding in Flight comp.");
+    addFlight(flight);
+  }
   useEffect(() => {
     let mounted = true;
 
@@ -50,7 +54,11 @@ export default function Flight({}) {
             loader
           ) : (
             <div className="wrapper">
-              <FlightSearcher airports={airports} facade={facade} />
+              <FlightSearcher
+                chooseFlight={addToFlights}
+                airports={airports}
+                facade={facade}
+              />
             </div>
           )}
         </div>
