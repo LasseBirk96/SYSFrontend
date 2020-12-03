@@ -113,6 +113,8 @@ function App() {
               flights={flights}
               restaurants={restaurants}
               airports={airports}
+              setRestaurants={setRestaurants}
+              setFlights={setFLights}
             />
           </Route>
           <Route exact path="/restaurant">

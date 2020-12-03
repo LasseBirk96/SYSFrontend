@@ -52,6 +52,9 @@ export default function Flight({ flight, airports }) {
           {flight.arrival.airport} Airport, terminal {flight.arrival.terminal}
         </div>
       </div>
+      <div className="row">
+        <div className="col">Airline: {flight.airline.name}</div>
+      </div>
     </div>
   );
 }

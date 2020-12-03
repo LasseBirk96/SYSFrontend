@@ -196,10 +196,15 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
   }
   function clickOnFlight(e, f) {
     e.preventDefault();
-    console.log("add fight to trip");
 
     chooseFlight(f);
-    console.log("added fight to trip");
+    setResults([]);
+    setNoFlights(
+      <div className="result" key="flightsDiv">
+        {" "}
+        Flight added to your trip
+      </div>
+    );
   }
 
   var today = new Date();
@@ -323,28 +328,34 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
               ) : (
                 <div className="result" key="flightsDiv">
                   {resultList.map((f) => (
-                    <button
-                      className="container"
-                      style={{
-                        outline: "none",
-                        padding: "10px 15px",
-                        textAlign: "center",
-                        border: "1px solid rgb(0, 217, 255)",
-                        marginBottom: "0, 5px",
-                        borderRadius: "10px",
+                    <div>
+                      {" "}
+                      <button
+                        className="container"
+                        style={{
+                          outline: "none",
+                          padding: "10px 15px",
+                          textAlign: "center",
+                          border: "1px solid rgb(0, 217, 255)",
+                          marginBottom: "0, 5px",
+                          borderRadius: "10px",
 
-                        cursor: "pointer",
-                        backgroundColor: "white",
-                      }}
-                      onClick={(e) => clickOnFlight(e, f)}
-                      key={resultList.indexOf(f)}
-                    >
-                      <Flight
-                        key={resultList.indexOf(f) + 15000}
-                        flight={f}
-                        airports={airports2}
-                      />
-                    </button>
+                          cursor: "pointer",
+                          backgroundColor: "white",
+                        }}
+                        onClick={(e) => clickOnFlight(e, f)}
+                        key={resultList.indexOf(f)}
+                      >
+                        <Flight
+                          key={resultList.indexOf(f) + 15000}
+                          flight={f}
+                          airports={airports2}
+                          onFocus={(e) => {
+                            e.target.backgroundColor = "rgb(0, 217, 255)";
+                          }}
+                        />
+                      </button>
+                    </div>
                   ))}
                 </div>
               )}
