@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Airport from "./Airport";
 import Flight from "./Flight";
+
 import arrows from "../../img/arrows.png";
 
 export default function FLightSearcher({ airports, facade }) {
@@ -315,12 +316,22 @@ export default function FLightSearcher({ airports, facade }) {
               ) : (
                 <div className="result" key="flightsDiv">
                   {resultList.map((f) => (
-                    <button key={resultList.indexOf(f)}>
-                      <Flight
-                        flight={f}
-                        key={f.arrival.scheduled}
-                        airports={airports2}
-                      />
+                    <button
+                      className="container"
+                      style={{
+                        outline: "none",
+                        padding: "10px 15px",
+                        textAlign: "center",
+                        border: "1px solid rgb(0, 217, 255)",
+                        marginBottom: "0, 5px",
+                        borderRadius: "10px",
+
+                        cursor: "pointer",
+                        backgroundColor: "white",
+                      }}
+                      key={resultList.indexOf(f)}
+                    >
+                      <Flight flight={f} airports={airports2} />
                     </button>
                   ))}
                 </div>

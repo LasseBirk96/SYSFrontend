@@ -29,6 +29,9 @@ export default function Header({ loggedIn, admin, logout }) {
           <NavLink activeClassName="active" to="/flight">
             Flights
           </NavLink>
+          <NavLink activeClassName="active" to="/trip">
+            Trip
+          </NavLink>
         </li>
       ) : (
         ""

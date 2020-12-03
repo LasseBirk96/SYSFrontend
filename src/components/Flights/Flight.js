@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-
+import { useState, useEffect } from "react";
 export default function Flight({ flight, airports }) {
   const [arrCity, setArrCity] = useState("City");
   const [depCity, setDepCity] = useState("City");
@@ -21,64 +20,27 @@ export default function Flight({ flight, airports }) {
     return newString;
   }
   return (
-    <div className="tableContent">
-      <table style={{ width: "100%" }}>
-        <tbody>
-          <tr style={{ textAlign: "center" }}>
-            <td
-              colSpan={1}
-              style={{
-                fontWeight: 600,
-                borderTop: "solid",
-                borderLeft: "solid",
-              }}
-            >
-              {flight.departure.iata}
-            </td>
-            <td colSpan={4} style={{ borderStyle: "solid", borderTop: "none" }}>
-              {flight.flight_date}
-            </td>
-            <td
-              colSpan={1}
-              style={{
-                fontWeight: 600,
-                borderTop: "solid",
-                borderRight: "solid",
-              }}
-            >
-              {flight.arrival.iata}
-            </td>
-          </tr>
-          <tr style={{ fontWeight: 600, textAlign: "center" }}>
-            <td colSpan={2} style={{ borderLeft: "solid" }}>
-              {depCity}
-            </td>
-            <td colSpan={1} style={{ borderRight: "solid" }}>
-              {convertDate(flight.departure.scheduled)}{" "}
-            </td>
-            <td colSpan={2}>{arrCity}</td>
-            <td colSpan={1} style={{ borderRight: "solid" }}>
-              {convertDate(flight.arrival.scheduled)}
-            </td>
-          </tr>
-          <tr>
-            <td
-              colSpan={3}
-              style={{ paddingLeft: 13, border: "solid", borderTop: "none" }}
-            >
-              {flight.departure.airport} Airport, terminal{" "}
-              {flight.departure.terminal}
-            </td>
-            <td
-              colSpan={3}
-              style={{ paddingLeft: 13, border: "solid", borderTop: "none" }}
-            >
-              {flight.arrival.airport} Airport, terminal{" "}
-              {flight.arrival.terminal}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="container-fluid" >
+      <div className="row">
+        <div className="col-2">{flight.departure.iata}</div>
+        <div className="col-8">{flight.flight_date}</div>
+        <div className="col-2">{flight.arrival.iata}</div>
+      </div>
+      <div className="row">
+        <div className="col-3"> {depCity}</div>
+        <div className="col-3">{convertDate(flight.departure.scheduled)}</div>
+        <div className="col-3"> {arrCity}</div>
+        <div className="col-3">{convertDate(flight.arrival.scheduled)}</div>
+      </div>
+      <div className="row">
+        <div className="col-6">
+          {flight.departure.airport} Airport, terminal{" "}
+          {flight.departure.terminal}
+        </div>
+        <div className="col-6">
+          {flight.arrival.airport} Airport, terminal {flight.arrival.terminal}
+        </div>
+      </div>
     </div>
   );
 }

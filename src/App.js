@@ -18,6 +18,7 @@ import Orders from "./components/Orders";
 import Users from "./components/Users";
 import Statistics from "./components/Statistics";
 import Restaurant from "./components/Restaurant";
+import Trip from "./components/Trip";
 
 function App() {
   const init = { username: "", password: "" };
@@ -49,9 +50,7 @@ function App() {
         }
       });
   };
-  function addToTrip(flight, restaurant){
-
-  }
+  function addToTrip(flight, restaurant) {}
 
   console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (
@@ -64,6 +63,9 @@ function App() {
           </Route>
           <Route exact path="/flight">
             <Flights />
+          </Route>
+          <Route exact path="/trip">
+            <Trip />
           </Route>
           <Route exact path="/restaurant">
             <Restaurant />
