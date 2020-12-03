@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Css-files/Register.css";
+
 import links from "./settings";
 
 import {

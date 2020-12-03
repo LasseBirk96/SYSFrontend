@@ -26,7 +26,7 @@ ul.header li {
 }
 
 ul.header li a {
-  display: inline;
+  display: block;
   color: rgb(255, 255, 255);
   text-align: center;
   padding: 14px 40px;

@@ -1,3 +1,4 @@
+import "../Css-files/RegisterAndLogin.css";
 import {
   useHistory,
   

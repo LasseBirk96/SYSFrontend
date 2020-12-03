@@ -26,11 +26,23 @@ export default function Header({ loggedIn, admin, logout, fquantity, rquantity }
           <NavLink activeClassName="active" to="/register">
             Register
           </NavLink>
-          <NavLink activeClassName="active" to="/flight">
-            Flights
-          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
+       {!admin && !loggedIn ? (
+        <li>
           <NavLink activeClassName="active" to="/trip">
             Trip
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
+       {!admin && !loggedIn ? (
+        <li>
+          <NavLink activeClassName="active" to="/flight">
+            Flight
           </NavLink>
         </li>
       ) : (

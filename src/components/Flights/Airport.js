@@ -7,15 +7,15 @@ export default function Airport({ airport, onClickFunction }) {
     <button
       id={airport.code}
       key={airport.code}
-      className="tableContent"
-      style={{ width: "100%" }}
+      className="searchResult"
+
       onClick={onClickFunction}
     >
       <div>
         <table style={{ width: "100%" }}>
           <tbody>
             <tr>
-              <td style={{ width: "70%" }}>
+              <td style={{ color:(0, 217, 255), width: "70%" }}>
                 {airport.city}, {airport.country}
               </td>
               <th style={{ width: "30%" }} rowSpan="2">

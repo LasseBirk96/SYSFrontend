@@ -45,7 +45,10 @@ const [loading, setLoading] = useState(true);
   }, []);
 
   return (
+
+   
     <div className="container-fluid">
+       <h1 className="title">  Search for a flight with <span className="logo">TravelEat </span> (Skriv "New Orleans" og "Memphis" på den 12 decemer for tjekke) </h1>
       <div className="row">
         <div className="col"></div>
         <div className="col-8">
@@ -53,7 +56,7 @@ const [loading, setLoading] = useState(true);
           {loading ? (
             loader
           ) : (
-            <div className="wrapper">
+            <div>
               <FlightSearcher
                 chooseFlight={addToFlights}
                 airports={airports}
