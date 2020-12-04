@@ -92,7 +92,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           setLoad(false);
           setStart(false);
           setNoFlights(
-            <div className="result" key="flightsDiv">
+            <div className="resultFlight" key="flightsDiv">
               {" "}
               No available flights for given date
             </div>
@@ -200,7 +200,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
     chooseFlight(f);
     setResults([]);
     setNoFlights(
-      <div className="result" key="flightsDiv">
+      <div className="resultFlight" key="flightsDiv">
         {" "}
         Flight added to your trip
       </div>
@@ -225,7 +225,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
     <div className="container-fluid">
       <div className="wrapper">
         <div key="inputDiv">
-          <div className="result" key="input">
+          <div className="resultFlight" key="input">
             <input
               className="tableContent"
               type="text"
@@ -290,7 +290,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           </div>
 
           {status !== "" ? (
-            <div key="resultStatus" className="result">
+            <div key="resultStatus" className="resultFlight">
               {status}
             </div>
           ) : (
@@ -298,7 +298,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           )}
 
           {loading ? (
-            <div className="result" key="loaderDiv">
+            <div className="resultFlight" key="loaderDiv">
               {loader}
               {""}
             </div>
@@ -310,7 +310,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
                 ) : resultMsg !== "" ? (
                   ""
                 ) : (
-                  <div className="result" key="resultMsg">
+                  <div className="resultFlight" key="resultMsg">
                     <div
                       className="tableContent"
                       style={{ textAlign: "center", fontWeight: "bold" }}
@@ -326,7 +326,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
               {resultList.length === 0 ? (
                 noFlightsFound
               ) : (
-                <div className="result" key="flightsDiv">
+                <div className="resultFlight" key="flightsDiv">
                   {resultList.map((f) => (
                     <div>
                       {" "}

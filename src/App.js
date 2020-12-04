@@ -33,6 +33,7 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
+  
 
   const logout = () => {
     facade.logout();
@@ -90,6 +91,7 @@ function App() {
       mounted = false;
     };
   }, []);
+  useEffect
 
   console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (

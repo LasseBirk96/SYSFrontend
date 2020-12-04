@@ -16,7 +16,7 @@ export default function Trip({
   let count = 0;
   const [msg, setMsg] = useState("");
   const loggedIn = false;
-  const [o, setO] = useState(
+  const [output, setOutput] = useState(
     <div className="container-fluid">
       <div className="row">
         <div className="col-8">
@@ -123,7 +123,7 @@ export default function Trip({
   );
 
   function saveTrip(e) {
-    setO(<UnknownUser />);
+    setOutput(<UnknownUser />);
     /*
     e.preventDefault();
     console.log("in saving");
@@ -153,7 +153,7 @@ export default function Trip({
       });
       */
   }
-  return o;
+  return output;
 }
 /*
 
