@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import facade from "../apiFacade";
 import links from "../settings";
 import FlightSearcher from "./Flights/FlightSearcher";
+import "../Css-files/flight.css";
 
 export default function Flight({ addFlight }) {
   const loader = <div className="loader"></div>;
-    const [status, setStatus] = useState("");
-const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
 
   function addToFlights(flight) {
-    
     addFlight(flight);
   }
   useEffect(() => {
@@ -45,10 +45,18 @@ const [loading, setLoading] = useState(true);
   }, []);
 
   return (
-
-   
     <div className="container-fluid">
-       <h1 className="title">  Search for a flight with <span className="logo">TravelEat </span> (Skriv "New Orleans" og "Memphis" på den 12 decemer for tjekke) </h1>
+      <div className="row">
+        <div className="col-12">
+          <h1 className="title">
+            {" "}
+            Search for a flight with <span className="logo">
+              TravelEat{" "}
+            </span>{" "}
+          </h1>
+        </div>
+      </div>
+
       <div className="row">
         <div className="col"></div>
         <div className="col-8">
