@@ -32,14 +32,8 @@ export default function Header({
           <NavLink activeClassName="active" to="/register">
             Register
           </NavLink>
-        </li>
-      ) : (
-        ""
-      )}
-       {!admin && !loggedIn ? (
-        <li>
-          <NavLink activeClassName="active" to="/trip">
-            Trip
+          <NavLink activeClassName="active" to="/flight">
+            Flights
           </NavLink>
         </li>
       ) : (
@@ -111,35 +105,59 @@ export default function Header({
       ) : (
         ""
       )}
-      <li>
-        <div className="container-fluid" style={{ backgroundImage: imgTrip }}>
-          <div className="row">
-            <img src={imgTrip} style={{ alignSelf: "right" }} height={55} />
-          </div>
-          <div className="row">
-            <div
-              className="col-6"
-              style={{
-                marginTop: "-15px",
-                textAlign: "left",
-                color: "rgb(0, 217, 255)",
-              }}
-            >
-              {fquantity < 1 ? "" : fquantity}
+      {!admin ? (
+        <li>
+          <NavLink activeClassName="active" to="/trip">
+            <div style={{ width: "10%" }}>
+              <div
+                className="container-fluid"
+                style={{ backgroundImage: imgTrip }}
+              >
+                <div
+                  style={{
+                    marginBottom: "-15px",
+                    textAlign: "right",
+                    color: "rgb(0, 217, 255)",
+                  }}
+                >
+                  Trip
+                </div>{" "}
+                <div className="row">
+                  <img
+                    src={imgTrip}
+                    style={{ alignSelf: "right" }}
+                    height={55}
+                  />
+                </div>
+                <div className="row">
+                  <div
+                    className="col-6"
+                    style={{
+                      marginTop: "-15px",
+                      textAlign: "left",
+                      color: "rgb(0, 217, 255)",
+                    }}
+                  >
+                    {fquantity < 1 ? "" : fquantity}
+                  </div>
+                  <div
+                    className="col-6"
+                    style={{
+                      marginTop: "-15px",
+                      textAlign: "right",
+                      color: "rgb(0, 217, 255)",
+                    }}
+                  >
+                    {rquantity < 1 ? "" : rquantity}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div
-              className="col-6"
-              style={{
-                marginTop: "-15px",
-                textAlign: "right",
-                color: "rgb(0, 217, 255)",
-              }}
-            >
-              {rquantity < 1 ? "" : rquantity}
-            </div>
-          </div>
-        </div>
-      </li>
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
       <div> </div>
     </ul>
   );

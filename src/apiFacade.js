@@ -4,12 +4,8 @@ const URL = links.server;
 const otherURL = links.otherServer;
 
 function apiFacade() {
-  //............Demo Package..............\\
-  const getDemoPack = () => {
-    return fetch(URL + "/api/info/demoPackage").then(handleHttpErrors);
-  };
-  //.........................\\
-
+  
+ 
   //............registerUser..............\\
   const registerUser = (user) => {
     const options = makeOptions("POST", false, {
@@ -60,6 +56,10 @@ function apiFacade() {
     const options = makeOptions("POST", false, flight);
     return fetch(URL + links.flights, options).then(handleHttpErrors);
   };
+  const saveTrip=(trip)=>{
+    const options = makeOptions("POST",true,trip);
+    return fetch(URL+links.saveTrip,options).then(handleHttpErrors)
+  }
 
   const makeOptions = (method, addToken, body) => {
     var opts = {
@@ -85,10 +85,10 @@ function apiFacade() {
     login,
     logout,
     fetchData,
-    getDemoPack,
     registerUser,
     fetchDummyData,
     findFlights,
+    saveTrip
   };
 }
 const facade = apiFacade();

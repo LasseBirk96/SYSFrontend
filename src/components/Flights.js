@@ -10,7 +10,7 @@ const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
 
   function addToFlights(flight) {
-    console.log("flight adding in Flight comp.");
+    
     addFlight(flight);
   }
   useEffect(() => {
