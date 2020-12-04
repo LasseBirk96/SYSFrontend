@@ -20,6 +20,7 @@ import Users from "./components/Users";
 import Statistics from "./components/Statistics";
 import Restaurant from "./components/Restaurant";
 import Trip from "./components/Trip";
+import UnknownUser from "./components/UnknownUser";
 
 function App() {
   const init = { username: "", password: "" };

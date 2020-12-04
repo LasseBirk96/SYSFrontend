@@ -1,8 +1,5 @@
 import "../Css-files/RegisterAndLogin.css";
-import {
-  useHistory,
-  
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 export default function LogIn({ login, init }) {
@@ -25,22 +22,37 @@ export default function LogIn({ login, init }) {
   };
   return (
     <div>
- <h2 className="registerHeader"> <span className="registerLogo">TravelEat </span>  </h2>
-      <form  className="registerContainer" onChange={onChange}>
-      <div className="registerHeader">Sign in</div>
-      <div>
-          <label className="nameField" >
-            <input type="text" id="username" className="inputField" placeholder="Username"/>
+      <h2 className="registerHeader">
+        {" "}
+        <span className="registerLogo">TravelEat </span>{" "}
+      </h2>
+      <form className="registerContainer" onChange={onChange}>
+        <div className="registerHeader">Sign in</div>
+        <div>
+          <label className="nameField">
+            <input
+              type="text"
+              id="username"
+              className="inputField"
+              placeholder="Username"
+            />
           </label>
-      </div>
+        </div>
 
-      <div>
-          <label className="nameField" >
-            <input type="password" id="password" className="inputField" placeholder="Password" />
+        <div>
+          <label className="nameField">
+            <input
+              type="password"
+              id="password"
+              className="inputField"
+              placeholder="Password"
+            />
           </label>
-      </div>
+        </div>
 
-        <button className="makeButton" onClick={performLogin}>Login</button>
+        <button className="makeButton" onClick={performLogin}>
+          Login
+        </button>
       </form>
     </div>
   );
