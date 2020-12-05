@@ -7,6 +7,7 @@ export default function Header({
   logout,
   fquantity,
   rquantity,
+  activUser,
 }) {
   const history = useHistory();
 
@@ -32,24 +33,12 @@ export default function Header({
           <NavLink activeClassName="active" to="/register">
             Register
           </NavLink>
-          <NavLink activeClassName="active" to="/flight">
-            Flights
-          </NavLink>
-        </li>
-      ) : (
-        ""
-      )}
-       {!admin && !loggedIn ? (
-        <li>
-          <NavLink activeClassName="active" to="/flight">
-            Flight
-          </NavLink>
         </li>
       ) : (
         ""
       )}
       {!admin && !loggedIn ? (
-        <li>
+        <li style={{ position: "absolute", right: 10 }}>
           <NavLink activeClassName="active" to="/login">
             Log in
           </NavLink>
@@ -70,15 +59,6 @@ export default function Header({
 
       {admin ? (
         <li>
-          <NavLink activeClassName="active" to="/orders">
-            Orders
-          </NavLink>
-        </li>
-      ) : (
-        ""
-      )}
-      {admin ? (
-        <li>
           <NavLink activeClassName="active" to="/users">
             Users
           </NavLink>
@@ -86,21 +66,12 @@ export default function Header({
       ) : (
         ""
       )}
-      {admin ? (
-        <li>
-          <NavLink activeClassName="active" to="/statistics">
-            Statisticks
-          </NavLink>
-        </li>
-      ) : (
-        ""
-      )}
 
-      {admin || loggedIn ? (
+      {!admin ? (
         <li>
-          <button className="tableContent" onClick={onClick}>
-            Log out
-          </button>
+          <NavLink activeClassName="active" to="/flights">
+            Flights
+          </NavLink>
         </li>
       ) : (
         ""
@@ -158,7 +129,16 @@ export default function Header({
       ) : (
         ""
       )}
-      <div> </div>
+      {admin || loggedIn ? (
+        <li style={{ position: "absolute", right: 10, top: 10 }}>
+          <button className="tableContent" onClick={onClick}>
+            Log out
+          </button>
+        </li>
+      ) : (
+        ""
+      )}
+      <div style={{ color: "white" }}> {activUser}</div>
     </ul>
   );
 }

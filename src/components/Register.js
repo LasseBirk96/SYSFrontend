@@ -58,7 +58,6 @@ export default function Register({ facade, init, login }) {
     }
   }
   function logIn() {
-    console.log("logIn in register");
     setTimeout(function () {
       if (monted) {
         console.log("mounted");

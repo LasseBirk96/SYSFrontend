@@ -23,9 +23,9 @@ function apiFacade() {
   const getToken = () => {
     return localStorage.getItem("jwtToken");
   };
-  const loggedIn = () => {
-    if (getWithExpiry("user") != null && getWithExpiry("jwtToken") != null) {
-      return true;
+  const isLoggedIn = () => {
+    if (getWithExpiry("user") != null || getWithExpiry("jwtToken") != null) {
+      return getWithExpiry("user");
     } else {
       return false;
     }
@@ -100,6 +100,10 @@ function apiFacade() {
     }
     return item.value;
   }
+
+  function getActivUser() {
+    return getWithExpiry("user");
+  }
   const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
@@ -108,7 +112,7 @@ function apiFacade() {
         Accept: "application/json",
       },
     };
-    if (addToken && loggedIn()) {
+    if (addToken && isLoggedIn()) {
       opts.headers["x-access-token"] = getToken();
     }
     if (body) {
@@ -120,7 +124,7 @@ function apiFacade() {
     makeOptions,
     setToken,
     getToken,
-    loggedIn,
+    isLoggedIn,
     login,
     logout,
     fetchData,
@@ -128,12 +132,14 @@ function apiFacade() {
     fetchDummyData,
     findFlights,
     saveTrip,
+    getActivUser,
   };
 }
 const facade = apiFacade();
 
 function handleHttpErrors(res) {
   if (!res.ok) {
+    console.log("res not ok");
     return Promise.reject({ status: res.status, fullError: res.json() });
   }
 

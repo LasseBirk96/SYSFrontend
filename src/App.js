@@ -15,12 +15,9 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Register from "./components/Register";
 import Account from "./components/Account";
-import Orders from "./components/Orders";
 import Users from "./components/Users";
-import Statistics from "./components/Statistics";
 import Restaurant from "./components/Restaurant";
 import Trip from "./components/Trip";
-import UnknownUser from "./components/UnknownUser";
 
 function App() {
   const init = { username: "", password: "" };
@@ -33,31 +30,14 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
-  
 
   const logout = () => {
     facade.logout();
     setLoggedIn(false);
     setAdmin(false);
-    setActiveUser("anonym");
+    setActiveUser("");
   };
-  const login = (user, pass) => {
-    facade
-      .login(user, pass)
-      .then((res) => {
-        user !== "admin" ? setLoggedIn(true) : setAdmin(true);
-        setActiveUser(user);
-      })
-      .then(console.log("logged in"))
-      .catch((err) => {
-        if (err.status) {
-          err.fullError.then((e) => setErrMsg(e.message));
-        } else {
-          setErrMsg("Network error has occurred: could not log in");
-          console.log("Network error! Could not log in");
-        }
-      });
-  };
+
   function addFlightToTrip(flight) {
     setFLights([...flights, flight]);
   }
@@ -78,6 +58,7 @@ function App() {
       .then(() => {
         if (mounted) {
           setLoading(false);
+          
         }
       })
       .catch((err) => {
@@ -91,7 +72,17 @@ function App() {
       mounted = false;
     };
   }, []);
-  useEffect
+  function whosLoggedIn() {
+    const activNow = facade.isLoggedIn();
+    if (activNow != false) {
+      setLoggedIn(true);
+      setActiveUser(activNow);
+    } else {
+      console.log("ActivNOW:");
+    }
+    console.log(activNow);
+  }
+  useEffect(whosLoggedIn, []);
 
   console.log("Admin status: " + admin + "  loggedIn status: " + loggedIn);
   return (
@@ -103,12 +94,13 @@ function App() {
           logout={logout}
           rquantity={restaurants.length}
           fquantity={flights.length}
+          activUser={activeUser}
         />
         <Switch>
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/flight">
+          <Route exact path="/flights">
             <Flights addFlight={addFlightToTrip} />
           </Route>
           <Route exact path="/trip">
@@ -118,6 +110,8 @@ function App() {
               airports={airports}
               setRestaurants={setRestaurants}
               setFlights={setFLights}
+              loggedIn={loggedIn}
+              activeUser={activeUser}
             />
           </Route>
           <Route exact path="/restaurant">
@@ -125,14 +119,25 @@ function App() {
           </Route>
           {!loggedIn ? (
             <Route exact path="/register">
-              <Register facade={facade} init={init} login={login} />
+              <Register
+                facade={facade}
+                init={init}
+                setLoggedIn={setLoggedIn}
+                setAdmin={setAdmin}
+                activUser={activeUser}
+              />
             </Route>
           ) : (
             ""
           )}
           {!loggedIn ? (
             <Route exact path="/login">
-              <LogIn login={login} init={init} />
+              <LogIn
+                facade={facade}
+                init={init}
+                setActivUser={setActiveUser}
+                setAdmin={setAdmin}
+              />
             </Route>
           ) : (
             ""
@@ -147,13 +152,7 @@ function App() {
           ) : (
             ""
           )}
-          {admin ? (
-            <Route exact path="/orders">
-              <Orders />
-            </Route>
-          ) : (
-            ""
-          )}
+
           {admin ? (
             <Route exact path="/users">
               <Users />
@@ -161,13 +160,7 @@ function App() {
           ) : (
             ""
           )}
-          {admin ? (
-            <Route exact path="/statistics">
-              <Statistics />
-            </Route>
-          ) : (
-            ""
-          )}
+
           <Route>
             <NoMatch />
           </Route>

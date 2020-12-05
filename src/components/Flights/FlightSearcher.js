@@ -62,7 +62,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
 
     for (const prop in flight) {
       if (flight[prop] === "") {
-        setStatus("Pleas choose valid arrival, departure and date ");
+        setStatus("Please, choose valid arrival, departure and date ");
         save = false;
       }
     }
@@ -74,6 +74,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
   }
 
   useEffect(() => {
+    console.log(flight);
     let mounted = true;
     let startFetch = true;
     for (const prop in flight) {
@@ -81,7 +82,6 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
         startFetch = false;
       }
     }
-    console.log("uses effect, start:" + startFetch);
     if (startFetch) {
       facade
         .findFlights(flight)
@@ -175,14 +175,11 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
     setFlight({ ...flight, [currentInputTarget.id]: chosenAirp.code });
     let airpString =
       chosenAirp.code + ", " + chosenAirp.city + ", " + chosenAirp.country;
-    console.log(currentInputTarget);
     inputTarget.value = airpString;
     setSugest([]);
   }
   function swapAirports() {
-    console.log("before if:");
     inputTargets.forEach((t) => console.log(t.value));
-    console.log(flight);
     if (inputTargets.length === 2) {
       let tmpValue = inputTargets[0].value;
       let tmpCode = flight.dep_code;
@@ -190,9 +187,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
       inputTargets[1].value = tmpValue;
       setFlight({ ...flight, dep_code: flight.arr_code, arr_code: tmpCode });
     }
-    console.log("after if:");
     inputTargets.forEach((t) => console.log(t.value));
-    console.log(flight);
   }
   function clickOnFlight(e, f) {
     e.preventDefault();

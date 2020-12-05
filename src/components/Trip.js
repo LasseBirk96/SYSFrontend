@@ -10,12 +10,13 @@ export default function Trip({
   flights,
   restaurants,
   airports,
-  setRestaurants,
+  loggedIn,
+  activUser,
   setFlights,
+  setRestaurants,
 }) {
   let count = 0;
   const [msg, setMsg] = useState("");
-  const loggedIn = false;
   const [output, setOutput] = useState(
     <div className="container-fluid">
       <div className="row">
@@ -123,35 +124,36 @@ export default function Trip({
   );
 
   function saveTrip(e) {
-    setOutput(<UnknownUser />);
-    /*
-    e.preventDefault();
-    console.log("in saving");
-    facade
-      .saveTrip({
-        flights: flights,
-        restaurants: restaurants,
-        username: "user",
-      })
-      .then((data) => {
-        setMsg(data);
-        console.log(data);
-      })
-      .then(() => {
-        if (msg === "The trip is saved on the trip list") {
+    if (loggedIn === false) {
+      setOutput(<UnknownUser />);
+    } else {
+      e.preventDefault();
+      console.log("in saving");
+      facade
+        .saveTrip({
+          flights: flights,
+          restaurants: restaurants,
+          username: "user",
+        })
+        .then((data) => {
+          setMsg(data);
+          console.log(data.msg);
           setFlights([]);
           setRestaurants([]);
-        }
-      })
-      .catch((err) => {
-        if (err.status) {
-          err.fullError.then((e) => setMsg(e.message));
-        } else {
-          setMsg("Network error has occurred: could not save thet trip");
-          console.log("Network error! Could not save that trip");
-        }
-      });
-      */
+        })
+        .then(() => {
+          setFlights([]);
+          setRestaurants([]);
+        })
+        .catch((err) => {
+          if (err.status) {
+            err.fullError.then((e) => setMsg(e.message));
+          } else {
+            setMsg("Network error has occurred: could not save thet trip");
+            console.log("Network error! Could not save that trip");
+          }
+        });
+    }
   }
   return output;
 }
