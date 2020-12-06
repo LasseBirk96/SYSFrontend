@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 export default function LogIn({
   facade,
   init,
-  setActiveUser,
+  setActivUser,
   setAdmin,
   setLoggedIn,
 }) {
@@ -26,6 +26,7 @@ export default function LogIn({
       <div className="loader"></div>
     </div>
   );
+  const successfulLogin = "Login succeeded";
 
   const onChange = (evt) => {
     setLoginCredentials({
@@ -59,19 +60,14 @@ export default function LogIn({
     if (start) {
       facade
         .login(loginCredentials.username, loginCredentials.password)
-        /*  .then((res) => {
-          res.username !== "admin" ? setLoggedIn(true) : setAdmin(true);
-          setActiveUser(res.username);
-        })*/
+
         .then(() => {
           if (mounted) {
             setLoading(false);
-            setMsg("Succed!");
-            /*   let u = facade.getActivUser;
-            u !== "admin" ? setLoggedIn(true) : setAdmin(true);
-            setActiveUser(u);*/
+            setMsg(successfulLogin);
           }
         })
+
         .catch((err) => {
           if (err.status) {
             err.fullError.then((e) => setMsg(e.message));
@@ -86,6 +82,18 @@ export default function LogIn({
       };
     }
   }, [start]);
+  useEffect(() => {
+    if (msg === successfulLogin) {
+      setTimeout(() => {
+        let u = facade.getActivUser;
+        u !== "admin" ? setLoggedIn(true) : setAdmin(true);
+        setActivUser(u);
+        loginCredentials.username !== "admin"
+          ? history.push("/account")
+          : history.push("/users");
+      }, 1500);
+    }
+  }, [msg]);
   return (
     <div>
       <h2 className="registerHeader">
@@ -101,6 +109,7 @@ export default function LogIn({
               id="username"
               className="inputField"
               placeholder="Username"
+              disabled={loading ? true : false}
             />
           </label>
         </div>
@@ -111,6 +120,7 @@ export default function LogIn({
               id="password"
               className="inputField"
               placeholder="Password"
+              disabled={loading ? true : false}
             />
           </label>
         </div>
@@ -126,6 +136,8 @@ export default function LogIn({
         ></div>{" "}
         {loading ? (
           loader
+        ) : msg === successfulLogin ? (
+          ""
         ) : (
           <button className="makeButton" onClick={startLogin}>
             Login

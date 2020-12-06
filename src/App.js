@@ -23,7 +23,7 @@ function App() {
   const init = { username: "", password: "" };
   const [loggedIn, setLoggedIn] = useState(false);
   const [errorMsg, setErrMsg] = useState("");
-  const [activeUser, setActiveUser] = useState("");
+  const [activeUser, setActivUser] = useState("");
   const [admin, setAdmin] = useState(false);
   const [flights, setFLights] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
@@ -35,7 +35,7 @@ function App() {
     facade.logout();
     setLoggedIn(false);
     setAdmin(false);
-    setActiveUser("");
+    setActivUser("");
   };
 
   function addFlightToTrip(flight) {
@@ -58,7 +58,6 @@ function App() {
       .then(() => {
         if (mounted) {
           setLoading(false);
-          
         }
       })
       .catch((err) => {
@@ -76,7 +75,7 @@ function App() {
     const activNow = facade.isLoggedIn();
     if (activNow != false) {
       setLoggedIn(true);
-      setActiveUser(activNow);
+      setActivUser(activNow);
     } else {
       console.log("ActivNOW:");
     }
@@ -135,8 +134,9 @@ function App() {
               <LogIn
                 facade={facade}
                 init={init}
-                setActivUser={setActiveUser}
+                setActivUser={setActivUser}
                 setAdmin={setAdmin}
+                setLoggedIn={setLoggedIn}
               />
             </Route>
           ) : (
