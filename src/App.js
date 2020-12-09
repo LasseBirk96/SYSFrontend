@@ -19,6 +19,7 @@ import Users from "./components/Users";
 import Restaurant from "./components/Restaurant";
 import Trip from "./components/Trip";
 
+
 function App() {
   const init = { username: "", password: "" };
   const [loggedIn, setLoggedIn] = useState(false);
@@ -30,6 +31,7 @@ function App() {
 
   const [loading, setLoading] = useState(true);
   const [airports, setAirports] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const logout = () => {
     facade.logout();
@@ -42,18 +44,21 @@ function App() {
     setFLights([...flights, flight]);
   }
 
+
+  function addRestaurantToTrip(restaurant) {
+    setRestaurants([...restaurants, restaurant]);
+  }
+
   useEffect(() => {
     let mounted = true;
 
     facade
-      .fetchData(links.airports)
+      .fetchData(links.cities)
       .then((data) => {
-        for (const airp of data) {
-          airports.push(airp);
+        for (const city of data) {
+          cities.push(city);
         }
 
-        console.log("airports");
-        console.log(airports);
       })
       .then(() => {
         if (mounted) {
@@ -64,13 +69,14 @@ function App() {
         if (err.status) {
           err.fullError.then((e) => console.log(e.message));
         } else {
-          console.log("Network error! Could not load airports");
+          console.log("Network error! Could not load cities");
         }
       });
     return function cleanup() {
       mounted = false;
     };
   }, []);
+
   function whosLoggedIn() {
     const activNow = facade.isLoggedIn();
     if (activNow != false) {
@@ -114,7 +120,8 @@ function App() {
             />
           </Route>
           <Route exact path="/restaurant">
-            <Restaurant />
+            <Restaurant addRestaurant={addRestaurantToTrip}
+            />
           </Route>
           {!loggedIn ? (
             <Route exact path="/register">

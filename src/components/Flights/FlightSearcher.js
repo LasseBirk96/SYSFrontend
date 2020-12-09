@@ -144,7 +144,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
       });
     }
 
-    if (value.length >= 1) {
+  /*  if (value.length >= 1) {
       airports.forEach((a) => {
         if (a.city.toLowerCase().startsWith(value.toLowerCase())) {
           if (
@@ -158,7 +158,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           }
         }
       });
-    }
+    } */
 
     if (tmpArr.length === 0) {
       setResultMsg("No airports found. Try to type something else");

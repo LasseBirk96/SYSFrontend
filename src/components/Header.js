@@ -78,6 +78,15 @@ export default function Header({
       )}
       {!admin ? (
         <li>
+          <NavLink activeClassName="active" to="/restaurant">
+            Restaurants
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
+      {!admin ? (
+        <li>
           <NavLink activeClassName="active" to="/trip">
             <div style={{ width: "10%" }}>
               <div

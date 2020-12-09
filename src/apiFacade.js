@@ -1,3 +1,4 @@
+import Restaurant from "./components/Restaurant";
 import links from "./settings";
 
 const URL = links.server;
@@ -68,6 +69,10 @@ function apiFacade() {
     const options = makeOptions("POST", true, trip);
     return fetch(URL + links.saveTrip, options).then(handleHttpErrors);
   };
+  const findRestaurants = (restaurant) => {
+    const options = makeOptions("POST", false, restaurant)
+    return fetch(URL + links.restaurant, options).then(handleHttpErrors)
+  }
 
   //https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/
   function setWithExpiry(key, value, ttl) {
@@ -133,6 +138,7 @@ function apiFacade() {
     findFlights,
     saveTrip,
     getActivUser,
+    findRestaurants
   };
 }
 const facade = apiFacade();

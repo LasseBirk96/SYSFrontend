@@ -5,6 +5,9 @@ function URL() {
     airports: "/api/flight/allairports",
     flights: "/api/flight/findflights",
     saveTrip: "/api/flight/savetrip",
+    countries: "/api/zomato/countries",
+    restaurant: "/api/zomato/search",
+    cities: "/api/zomato/citylist"
   };
 }
 const url = URL();
