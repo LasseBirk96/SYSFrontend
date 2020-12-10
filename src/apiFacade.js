@@ -55,6 +55,10 @@ function apiFacade() {
     const options = makeOptions("GET", true); //True add's the token
     return fetch(URL + url2, options).then(handleHttpErrors);
   };
+  const fetchDataNOTOken = (url2) => {
+    const options = makeOptions("GET", true); //True add's the token
+    return fetch(URL + url2, options).then(handleHttpErrors);
+  };
 
   const fetchDummyData = () => {
     const options = makeOptions("GET"); //True add's the token
@@ -69,10 +73,11 @@ function apiFacade() {
     const options = makeOptions("POST", true, trip);
     return fetch(URL + links.saveTrip, options).then(handleHttpErrors);
   };
-  const findRestaurants = (restaurant) => {
-    const options = makeOptions("POST", false, restaurant)
-    return fetch(URL + links.restaurant, options).then(handleHttpErrors)
-  }
+
+  const fetchCities = (country) => {
+    const options = makeOptions("POST", false, country);
+    return fetch(URL + links.cities, options).then(handleHttpErrors);
+  };
 
   //https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/
   function setWithExpiry(key, value, ttl) {
@@ -138,7 +143,8 @@ function apiFacade() {
     findFlights,
     saveTrip,
     getActivUser,
-    findRestaurants
+    fetchDataNOTOken,
+    fetchCities,
   };
 }
 const facade = apiFacade();

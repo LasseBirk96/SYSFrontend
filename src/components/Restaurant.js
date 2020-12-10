@@ -4,28 +4,27 @@ import links from "../settings";
 import RestaurantSearcher from "./Restaurants/RestaurantSearcher";
 
 export default function Restaurant({ addRestaurant }) {
-
   const loader = <div className="loader"></div>;
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [cities, setCity] = useState([]);
-
+  /*
   function addToRestaurants(restaurant) {
-    addRestaurant(restaurant)
+    addRestaurant(restaurant);
   }
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
 
     facade
-      .fetchData(links.cities)
+      .fetchData(links.countries)
       .then((data) => {
         for (const city of data) {
-          cities.push(city)
+          cities.push(city);
         }
       })
       .then(() => {
         if (mounted) {
-          setLoading(false)
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -35,46 +34,28 @@ export default function Restaurant({ addRestaurant }) {
           setStatus("Network error has occurred: could not load cities");
           console.log("Network error! Could not load cities");
         }
-      })
+      });
     return function cleanup() {
-      mounted = false
-    }
-  }, [])
-
-
+      mounted = false;
+    };
+  }, []);
+*/
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-12">
           <h1 className="title">
             {" "}
-            Search for a restaurant with <span className="logo">
-              TravelEat{" "}
-            </span>{" "}
+            Search for a restaurant with{" "}
+            <span className="logo">TravelEat </span>{" "}
           </h1>
         </div>
       </div>
       <div className="row">
         <div className="col"></div>
-        <div className="col-8">
-          {" "}
-          {loading ? (
-            loader
-          ) : (
-              <div>
-                <RestaurantSearcher
-                chooseRestaurant={addToRestaurants}
-                cities={cities}
-                facade={facade}
-                />
-
-              </div>
-            )}
-        </div>
+        <div className="col-8"> {loading ? loader : <div>blahblah</div>}</div>
         <div className="col"></div>
       </div>
     </div>
-
-
   );
 }
