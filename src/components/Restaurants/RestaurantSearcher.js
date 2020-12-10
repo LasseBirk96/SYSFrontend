@@ -16,33 +16,33 @@ export default function RestauranSearcher() {
   const [showCityInput, setShowCityInput] = useState(false);
   const [citiesOfCountry, setCitysOfCountry] = useState([]);
   useEffect(() => {
-    if (checkStorageForCountries() === false) {
-      let mounted = true;
-      console.log("In use effect");
-      facade
-        .fetchData(links.countries)
-        .then((data) => setAllCountries(data.map((c) => c)))
-        .then(console.log(allCountries))
-        .then(() => {
-          if (mounted) {
-            localStorage.setItem("countries", JSON.stringify(allCountries));
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          if (err.status) {
-            err.fullError.then((e) => console.log(e.msg));
-          } else {
-            console.log("Network error has occurred: could not load coutries");
-          }
-        });
-      return function cleanup() {
-        mounted = false;
-      };
-    } else {
-      setAllCountries(localStorage.getItem("countries").split(","));
-      setLoading(false);
-    }
+    let mounted = true;
+    console.log("In use effect");
+    facade
+      .fetchData(links.countries)
+      .then((data) => {
+        setAllCountries(data.map((c) => c));
+        console.log(data);
+        localStorage.setItem("countries", JSON.stringify(data));
+      })
+      //        .then(console.log(allCountries))
+      .then(() => {
+        if (mounted) {
+          //         localStorage.setItem("countries", JSON.stringify(allCountries));
+          //         console.log(allCountries);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (err.status) {
+          err.fullError.then((e) => console.log(e.msg));
+        } else {
+          console.log("Network error has occurred: could not load coutries");
+        }
+      });
+    return function cleanup() {
+      mounted = false;
+    };
   }, []);
 
   function checkStorageForCountries() {
