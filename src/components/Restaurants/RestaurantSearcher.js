@@ -15,6 +15,8 @@ export default function RestauranSearcher() {
   const [loadingCities, setLoadingCities] = useState(false);
   const [showCityInput, setShowCityInput] = useState(false);
   const [citiesOfCountry, setCitysOfCountry] = useState([]);
+  const [cityInputTarget, setCityTarget] = useState(null);
+  const [cityOptions, setCityOptions] = useState([]);
   useEffect(() => {
     let mounted = true;
     console.log("In use effect");
@@ -25,11 +27,9 @@ export default function RestauranSearcher() {
         console.log(data);
         localStorage.setItem("countries", JSON.stringify(data));
       })
-      //        .then(console.log(allCountries))
+
       .then(() => {
         if (mounted) {
-          //         localStorage.setItem("countries", JSON.stringify(allCountries));
-          //         console.log(allCountries);
           setLoading(false);
         }
       })
@@ -45,16 +45,11 @@ export default function RestauranSearcher() {
     };
   }, []);
 
-  function checkStorageForCountries() {
-    const countriesValue = localStorage.getItem("countries");
-    return countriesValue !== null;
-  }
-
   function filterCountries(e) {
     setCountryTarget(e.target);
     setSug([]);
     setOptions([]);
-    let count = 0;
+
     const input = e.target.value;
     if (input.length > 0) {
       allCountries.forEach((c) => {
@@ -83,17 +78,25 @@ export default function RestauranSearcher() {
   function clickOnInputCountry(e) {
     e.preventDefault();
     setCountryTarget(e.target);
+
+    setCityOptions([]);
+    console.log(cityOptions);
     console.log(countryInputTarget);
   }
   function onClickCountry(e) {
     e.preventDefault();
 
     countryInputTarget.value = e.currentTarget.value;
-    countryInputTarget.disabled = true;
+    //  countryInputTarget.disabled = true;
 
-    setOptions([]);
     setCountry({ country: e.currentTarget.value });
+    setOptions([]);
+    setCityOptions([]);
     setFetchCities(true);
+
+    if (cityInputTarget !== null) {
+      cityInputTarget.value = "";
+    }
   }
 
   useEffect(() => {
@@ -101,11 +104,16 @@ export default function RestauranSearcher() {
       let mounted = true;
       setShowCityInput(true);
       setLoadingCities(true);
+      //           setCitysOfCountry([]);
 
       facade
         .fetchCities(chosenCountry)
+
         .then((data) => {
+          let tmp = [];
           data.forEach((city) => {
+            tmp.push(city);
+
             citiesOfCountry.push(city);
           });
           console.log("citiesOfCountry");
@@ -130,6 +138,90 @@ export default function RestauranSearcher() {
     }
   }, [fetchCities]);
 
+  function filterCities(e) {
+    setSug([]);
+    setCityOptions([]);
+    setCityTarget(e.target);
+    console.log("cityInputTarget:");
+    console.log(cityInputTarget);
+
+    const input = e.target.value;
+    if (input.length > 0) {
+      citiesOfCountry.forEach((c) => {
+        if (c.name.toLowerCase().startsWith(input.toLowerCase())) {
+          sugestions.push(c.name);
+
+          setCityOptions(
+            sugestions.map((s) => (
+              <button
+                className="tableContent"
+                style={{ textAlign: "center", fontWeight: "bold" }}
+                value={s}
+                key={s}
+                onClick={onClickCity}
+              >
+                {s}{" "}
+              </button>
+            ))
+          );
+        }
+      });
+    }
+    setCityTarget(e.target);
+  }
+
+  function onClickCity(e) {
+    console.log("hello, world!");
+    console.log("cityInputTarget:");
+    console.log(cityInputTarget);
+
+    cityInputTarget.value = e.currentTarget.value;
+    console.log("cityInputTarget:");
+    console.log(cityInputTarget);
+
+    // cityInputTarget.disabled = true;
+    setCityOptions([]);
+  }
+
+  function clickOnInputCity(e) {
+    e.preventDefault();
+    setCityOptions([]);
+
+    setCityTarget(e.target);
+    console.log(cityInputTarget);
+    if (e.target.value.length === 0) {
+      setCityOptions(
+        citiesOfCountry.map((s) => (
+          <button
+            className="tableContent"
+            style={{ textAlign: "center", fontWeight: "bold" }}
+            value={s.name}
+            key={s.name}
+            onClick={onClickCity}
+          >
+            {s.name}
+          </button>
+        ))
+      );
+    }
+  }
+  /*
+  function xxx(e) {
+    e.preventDefault();
+    
+    setLoading(true);
+    setSug([]);
+    setOptions([]);
+    setCountryTarget(null);
+    setCountry(null);
+    setFetchCities(false);
+    setLoadingCities(false);
+    setShowCityInput(false);
+    setCitysOfCountry([]);
+    setCityTarget(null);
+    setCityOptions([]);
+  }*/
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -147,6 +239,7 @@ export default function RestauranSearcher() {
         <div className="col"></div>
         <div className="col-8">
           {" "}
+          <button>XXX</button>
           {loading ? (
             loader
           ) : (
@@ -160,7 +253,7 @@ export default function RestauranSearcher() {
                         type="text"
                         id="country"
                         key="country"
-                        placeholder={"From"}
+                        placeholder={"Country"}
                         onChange={filterCountries}
                         onClick={clickOnInputCountry}
                       />
@@ -182,15 +275,16 @@ export default function RestauranSearcher() {
                                 type="text"
                                 id="city"
                                 key="city"
-                                placeholder={"From"}
-                                value={citiesOfCountry.length}
+                                placeholder={"City"}
+                                onChange={filterCities}
+                                onClick={clickOnInputCity}
                               />
                               <div className="form-group"></div>
                               <ul
                                 className="list-group"
                                 style={{ listStyleType: "none" }}
                               >
-                                {options}
+                                {cityOptions}
                               </ul>
                             </>
                           )}
