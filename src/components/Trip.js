@@ -77,7 +77,7 @@ export default function Trip({
                   <h3 className="userFlights">Your flights</h3>
                 )}
                 {flights.map((f) => (
-                  <div className="tripElement">
+                  <div className="tripElement" style={{ textAlign: "center" }}>
                     <Flight
                       flight={f}
                       airports={airports}
