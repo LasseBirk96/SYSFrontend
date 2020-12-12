@@ -144,7 +144,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
       });
     }
 
-  /*  if (value.length >= 1) {
+    /*  if (value.length >= 1) {
       airports.forEach((a) => {
         if (a.city.toLowerCase().startsWith(value.toLowerCase())) {
           if (
@@ -220,7 +220,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
     <div className="container-fluid">
       <div className="wrapper">
         <div key="inputDiv">
-          <div className="resultFlight" key="input">
+          <div className="resultFlight" className="col-md-12" key="input">
             <input
               className="tableContent"
               type="text"
@@ -285,7 +285,11 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           </div>
 
           {status !== "" ? (
-            <div key="resultStatus" className="resultFlight">
+            <div
+              key="resultStatus"
+              className="resultFlight"
+              className="col-md-12"
+            >
               {status}
             </div>
           ) : (

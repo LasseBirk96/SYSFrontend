@@ -15,8 +15,10 @@ export default function RestauranSearcher() {
   const [loadingCities, setLoadingCities] = useState(false);
   const [showCityInput, setShowCityInput] = useState(false);
   const [citiesOfCountry, setCitysOfCountry] = useState([]);
+
   const [cityInputTarget, setCityTarget] = useState(null);
   const [cityOptions, setCityOptions] = useState([]);
+
   useEffect(() => {
     let mounted = true;
     console.log("In use effect");
@@ -77,8 +79,26 @@ export default function RestauranSearcher() {
 
   function clickOnInputCountry(e) {
     e.preventDefault();
+    if (e.target.value.length < 1) {
+      setOptions(
+        allCountries.map((s) => (
+          <button
+            className="tableContent"
+            style={{ textAlign: "center", fontWeight: "bold" }}
+            value={s}
+            key={s}
+            onClick={onClickCountry}
+          >
+            {s}{" "}
+          </button>
+        ))
+      );
+    }
+    setCitysOfCountry([]);
     setCountryTarget(e.target);
-
+    if (countryInputTarget === null) {
+      setCountryTarget(e.target);
+    }
     setCityOptions([]);
     console.log(cityOptions);
     console.log(countryInputTarget);
@@ -87,7 +107,7 @@ export default function RestauranSearcher() {
     e.preventDefault();
 
     countryInputTarget.value = e.currentTarget.value;
-    //  countryInputTarget.disabled = true;
+    // countryInputTarget.disabled = true;
 
     setCountry({ country: e.currentTarget.value });
     setOptions([]);
@@ -104,7 +124,6 @@ export default function RestauranSearcher() {
       let mounted = true;
       setShowCityInput(true);
       setLoadingCities(true);
-      //           setCitysOfCountry([]);
 
       facade
         .fetchCities(chosenCountry)
@@ -122,6 +141,7 @@ export default function RestauranSearcher() {
         .then(() => {
           if (mounted) {
             setLoadingCities(false);
+            setFetchCities(false);
           }
         })
         .catch((err) => {
@@ -139,6 +159,7 @@ export default function RestauranSearcher() {
   }, [fetchCities]);
 
   function filterCities(e) {
+    // setCityTarget(e.target);
     setSug([]);
     setCityOptions([]);
     setCityTarget(e.target);
@@ -149,18 +170,19 @@ export default function RestauranSearcher() {
     if (input.length > 0) {
       citiesOfCountry.forEach((c) => {
         if (c.name.toLowerCase().startsWith(input.toLowerCase())) {
-          sugestions.push(c.name);
+          sugestions.push(c);
 
           setCityOptions(
             sugestions.map((s) => (
               <button
                 className="tableContent"
                 style={{ textAlign: "center", fontWeight: "bold" }}
-                value={s}
-                key={s}
+                value={s.name}
+                key={s.name}
+                id={s.id}
                 onClick={onClickCity}
               >
-                {s}{" "}
+                {s.name}{" "}
               </button>
             ))
           );
@@ -171,15 +193,16 @@ export default function RestauranSearcher() {
   }
 
   function onClickCity(e) {
-    console.log("hello, world!");
-    console.log("cityInputTarget:");
-    console.log(cityInputTarget);
-
+    const city_name = e.target.value;
+    let ciity_id = -1;
+    citiesOfCountry.forEach((element) => {
+      if (element.name === city_name) {
+        ciity_id = element.id;
+      }
+      console.log(ciity_id);
+    });
     cityInputTarget.value = e.currentTarget.value;
-    console.log("cityInputTarget:");
-    console.log(cityInputTarget);
 
-    // cityInputTarget.disabled = true;
     setCityOptions([]);
   }
 
@@ -205,27 +228,11 @@ export default function RestauranSearcher() {
       );
     }
   }
-  /*
-  function xxx(e) {
-    e.preventDefault();
-    
-    setLoading(true);
-    setSug([]);
-    setOptions([]);
-    setCountryTarget(null);
-    setCountry(null);
-    setFetchCities(false);
-    setLoadingCities(false);
-    setShowCityInput(false);
-    setCitysOfCountry([]);
-    setCityTarget(null);
-    setCityOptions([]);
-  }*/
 
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12">
+        <div className="col-md-12">
           <h1 className="title">
             {" "}
             Search for restaurants with <span className="logo">
@@ -255,7 +262,12 @@ export default function RestauranSearcher() {
                         key="country"
                         placeholder={"Country"}
                         onChange={filterCountries}
-                        onClick={clickOnInputCountry}
+                        onClick={(e) => {
+                          setCountryTarget(e.target);
+                          if (countryInputTarget !== null) {
+                            clickOnInputCountry(e);
+                          }
+                        }}
                       />
                       <div className="form-group"></div>
                       <ul
@@ -277,7 +289,12 @@ export default function RestauranSearcher() {
                                 key="city"
                                 placeholder={"City"}
                                 onChange={filterCities}
-                                onClick={clickOnInputCity}
+                                onClick={(e) => {
+                                  setCityTarget(e.target);
+                                  if (cityInputTarget !== null) {
+                                    clickOnInputCity(e);
+                                  }
+                                }}
                               />
                               <div className="form-group"></div>
                               <ul
