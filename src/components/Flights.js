@@ -59,7 +59,7 @@ export default function Flight({ addFlight }) {
 
       <div className="row">
         <div className="col"></div>
-        <div className="col-8">
+        <div className="col-xl-8 col-md-12">
           {" "}
           {loading ? (
             loader

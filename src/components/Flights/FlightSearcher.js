@@ -199,18 +199,22 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
     return city;
   }
 
-  function clickOnFlight(e, flight) {
+  function clickOnFlight(e, set) {
     e.preventDefault();
+    const newSet = { id: set.id, flights: [] };
+    set.flights.forEach((flight) => {
+      const f = {
+        ...flight,
+        depCity: addDepCity(flight),
+        arrCity: addArrCity(flight),
+      };
+      newSet.flights.push(f);
+    });
 
-    const f = {
-      ...flight,
-      depCity: addDepCity(flight),
-      arrCity: addArrCity(flight),
-    };
     console.log("IN CLICK ON FLIGHT");
-    console.log(f);
+    console.log(newSet);
 
-    chooseFlight(f);
+    chooseFlight(newSet);
     setResults([]);
     setNoFlights(
       <div className="resultFlight" key="flightsDiv">
@@ -305,8 +309,8 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           {status !== "" ? (
             <div
               key="resultStatus"
-              className="resultFlight"
               className="col-md-12"
+              className="resultFlight"
             >
               {status}
             </div>
@@ -315,7 +319,7 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
           )}
 
           {loading ? (
-            <div className="resultFlight" key="loaderDiv">
+            <div className="resultFlight" className="col-md-12" key="loaderDiv">
               {loader}
               {""}
             </div>
@@ -343,7 +347,11 @@ export default function FLightSearcher({ airports, facade, chooseFlight }) {
               {resultList.length === 0 ? (
                 noFlightsFound
               ) : (
-                <div className="resultFlight" key="flightsDiv">
+                <div
+                  className="col-md-12"
+                  className="resultFlight"
+                  key="flightsDiv"
+                >
                   {resultList.map((s) => (
                     <div>
                       {" "}

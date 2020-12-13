@@ -78,13 +78,19 @@ export default function Trip({
                 ) : (
                   <h3 className="userFlights">Your flights</h3>
                 )}
-                {flights.map((f) => (
-                  <div className="tripElement" style={{ textAlign: "center" }}>
-                    <Flight
-                      flight={f}
-                      airports={airports}
-                      key={"f" + count++}
-                    />
+                {flights.map((set) => (
+                  <div
+                    className="tripElement"
+                    style={{ textAlign: "center" }}
+                    key={set.id}
+                  >
+                    {set.flights.map((f) => 
+                      <Flight
+                        flight={f}
+                        airports={airports}
+                        key={f.flight + count++}
+                      />
+                    )}
                   </div>
                 ))}
               </div>

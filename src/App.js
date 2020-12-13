@@ -47,7 +47,6 @@ function App() {
     setRestaurants([...restaurants, restaurant]);
   }
 
-  
   function whosLoggedIn() {
     const activNow = facade.isLoggedIn();
     if (activNow != false) {
