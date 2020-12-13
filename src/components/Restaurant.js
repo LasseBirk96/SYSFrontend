@@ -73,7 +73,7 @@ export default function Restaurant({ restaurant, imgId }) {
     id: "16780467",
     name: "Veselka",
     location: {
-      address: "144 2nd Avenue 10003",
+      address: "144 2nd Avenue 12",
       city: "New York City",
       latitude: "40.7287300000",
       longitude: "-73.9870800000",
@@ -81,18 +81,44 @@ export default function Restaurant({ restaurant, imgId }) {
     },
   };
   return (
-    <div className="col-md-12 col-xl-6">
+    <div className="col-xl-12 col-xl-6">
+      <img src={imgArr[imgId - 1]} style={{ maxWidth: 250 }} />
       <div
         className="col-xl-12"
         style={{
           textAlign: "left",
           color: "rgb(240, 20, 110",
           fontWeight: "bold",
+          textAlign: "center",
+          fontSize: 30,
         }}
       >
         {restaurant.name}
       </div>
-      <img src={imgArr[imgId - 1]} style={{ maxWidth: 250 }} />
+      <div
+        className="col-xl-12"
+        style={{
+          textAlign: "left",
+          color: "rgb(140, 110, 140",
+          fontWeight: "400",
+          textAlign: "center",
+          
+        }}
+      >
+        {restaurant.location.address}
+      </div>
+      <div
+        className="col-xl-12"
+        style={{
+          textAlign: "left",
+          color: "rgb(140, 110, 140",
+          fontWeight: "600",
+          textAlign: "center",
+        }}
+      >
+        {restaurant.location.city}, {restaurant.location.zipcode}
+      </div>
+
       <GoogleMap
         onLoad={(map) => {
           const bounds = new window.google.maps.LatLngBounds();
