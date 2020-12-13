@@ -18,14 +18,17 @@ export default function RestauranSearcher() {
   const [citiesOfCountry, setCitysOfCountry] = useState([]);
   const [cityInputTarget, setCityTarget] = useState(null);
   const [cityOptions, setCityOptions] = useState([]);
-  const [chosenCity, setChosenCity] = useState([null])
+  const [chosenCity, setChosenCity] = useState(null)
   const [showCityDataInput, setShowCityDataInput] = useState(false)
   const [loadingCityData, setLoadingCityData] = useState(false)
   const [cityDataOfCities, setCityDataOfCities] = useState([])
   const [fetchCityData, setFetchCityData] = useState(false)
   const [cuisines, setCuisines] = useState([])
-  const [cuisineInputTarget, setCuisineInputTarget] = useState(null)
+  const [cuisineInputTarget, setCuisineTarget] = useState(null)
   const [cuisinesOfCity, setCuisinesOfCity] = useState([])
+  const [collections, setCollections] = useState([])
+  const [cuisineOptions, setCuisineOptions] = useState([])
+
  
 
   useEffect(() => {
@@ -168,12 +171,9 @@ export default function RestauranSearcher() {
   }, [fetchCities]);
 
   function filterCities(e) {
-    // setCityTarget(e.target);
     setSug([]);
     setCityOptions([]);
     setCityTarget(e.target);
-    console.log("cityInputTarget:");
-    console.log(cityInputTarget);
 
     const input = e.target.value;
     if (input.length > 0) {
@@ -211,7 +211,7 @@ export default function RestauranSearcher() {
       console.log(ciity_id);
     });
     cityInputTarget.value = e.currentTarget.value;
-    setChosenCity([ciity_id])
+    setChosenCity(ciity_id)
     setCityOptions([]);
     setFetchCityData(true)
   }
@@ -237,7 +237,6 @@ export default function RestauranSearcher() {
         ))
       );
     }
-    setCityDataOfCities([])
   }
 
   useEffect(() => {
@@ -246,28 +245,34 @@ export default function RestauranSearcher() {
       setShowCityDataInput(true);
       setLoadingCityData(true);
 
+
       facade
-        .fetchCityData(chosenCity)
+        .fetchCityData({city_id: chosenCity})
+        
         .then((data) => {
-          let tmp = [];
-          data.forEach((city) => {
-            tmp.push(city);
+          console.log(data)
+          console.log(data.cuisines)
+          console.log(data.collections)
+          const tmpCol = data.collections.map((col) => (col)) 
+          const tmpCui = data.cuisines.map((cui) => cui)
 
-            cityDataOfCities.push(city);
-          });
-
+          setCollections(tmpCol)
+          setCuisines(tmpCui)
+          
+          
+          
         })
         .then(() => {
           if (mounted) {
-            setLoadingCityData(false);
             setFetchCityData(false);
+            setLoadingCityData(false);
           }
         })
         .catch((err) => {
           if (err.status) {
             err.fullError.then((e) => console.log(e.message));
           } else {
-            console.log("Network error! Could not load cities");
+            console.log("Network error! Could not load cityData");
           }
         });
       return function cleanup() {
@@ -278,17 +283,15 @@ export default function RestauranSearcher() {
   }, [fetchCityData]);
 
   function filterCuisines(e) {
-
     setSug([])
-    setCuisineInputTarget(e.target)
-    setCuisines([])
+    setCuisineOptions([])
+    setCuisineTarget(e.target)
     const input = e.target.value
     if(input.length>0) {
-      cityDataOfCities.forEach((cd) => {
-        if (cd.name.toLowerCase().startsWith(input.toLowerCase)) {
-          sugestions.push(cd)
-
-          setCuisines(
+      cuisines.forEach((cui) => {
+        if (cui.name.toLowerCase().startsWith(input.toLowerCase())) {
+          sugestions.push(cui)
+          setCuisineOptions(
             sugestions.map((s) => (
               <button
                 className="tableContent"
@@ -305,7 +308,7 @@ export default function RestauranSearcher() {
         }
       })
     }
-    setCuisines(e.target)
+    setCuisineTarget(e.target)
   }
 
   function onClickCuisine(e) {
@@ -315,17 +318,17 @@ export default function RestauranSearcher() {
 
   function clickOnInputCuisines(e) {
     e.preventDefault();
-    setCuisines([]);
-    setCuisineInputTarget(e.target);
+    setCuisineOptions([])
+    setCuisineTarget(e.target);
     console.log(cuisineInputTarget);
     if (e.target.value.length === 0) {
-      setCuisines(
-        cuisineInputTarget.map((s) => (
+      setCuisineOptions(
+        cityDataOfCities.map((s) => (
           <button
             className="tableContent"
             style={{ textAlign: "center", fontWeight: "bold" }}
             value={s.name}
-            key={s.name}
+            key={s.id}
             onClick={onClickCuisine}
           >
             {s.name}
@@ -333,7 +336,6 @@ export default function RestauranSearcher() {
         ))
       );
     }
-    setCuisinesOfCity([])
   }
 
   return (
@@ -425,13 +427,13 @@ export default function RestauranSearcher() {
                               <input
                                 className="tableContent"
                                 type="text"
-                                id="city"
-                                key="city"
-                                placeholder={"City"}
+                                id="collection"
+                                key="collection"
+                                placeholder={"Collection"}
                                 onChange={filterCuisines}
                                 onClick={(e) => {
-                                  setCuisineInputTarget(e.target);
-                                  if (cityInputTarget !== null) {
+                                  setCuisineTarget(e.target);
+                                  if (cuisineInputTarget !== null) {
                                     clickOnInputCuisines(e);
                                   }
                                 }}
@@ -441,7 +443,7 @@ export default function RestauranSearcher() {
                                 className="list-group"
                                 style={{ listStyleType: "none" }}
                               >
-                                {cuisines}
+                                {cuisineOptions}
                               </ul>
                             </>
                           )}
@@ -451,6 +453,11 @@ export default function RestauranSearcher() {
                       )}
                     </div>
                   </div>
+                </div>
+                <div className="wrapper">
+                        asda
+
+
                 </div>
               </div>
             </div>
