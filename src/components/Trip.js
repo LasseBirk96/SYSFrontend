@@ -15,15 +15,17 @@ export default function Trip({
   setFlights,
   setRestaurants,
 }) {
+  const history = useHistory();
+
   let count = 0;
   const [msg, setMsg] = useState("");
   const [output, setOutput] = useState(
     <div className="container-fluid">
       <div className="row">
-        <div className="col-8">
+        <div className="col-md-12 col-xl-6">
           <div className="row">
             <div className="col-2"></div>
-            <div className="col-8">
+            <div className="col-md-12 col-xl-8">
               {flights.length < 1 && restaurants.length < 1 ? (
                 <div
                   className="logo"
@@ -56,7 +58,7 @@ export default function Trip({
             <div className="col-2"></div>
           </div>
           <div className="row">
-            <div className="col-11">
+            <div className="col-12" key="col11">
               <div className="tripElement">
                 {flights.length < 1 ? (
                   <div style={{ textAlign: "center" }}>
@@ -87,10 +89,10 @@ export default function Trip({
                 ))}
               </div>
             </div>
-            <div className="col-1"></div>
+            <div className="col-1" key="col01"></div>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-xl-6 col-md-12">
           <div className="col-12">
             <div className="tripElement">
               {restaurants.length < 1 ? (
@@ -113,7 +115,7 @@ export default function Trip({
               )}
               {restaurants.map((r) => (
                 <div className="tripElement">
-                  <Restaurant restauran={r} key={"r" + count++} />
+                  <Restaurant restaurant={r} key={"r" + count++} />
                 </div>
               ))}
             </div>

@@ -69,6 +69,10 @@ function apiFacade() {
     const options = makeOptions("POST", false, flight);
     return fetch(URL + links.flights, options).then(handleHttpErrors);
   };
+  const findFlightSets = (flight) => {
+    const options = makeOptions("POST", false, flight);
+    return fetch(URL + links.flightsets, options).then(handleHttpErrors);
+  };
   const saveTrip = (trip) => {
     const options = makeOptions("POST", true, trip);
     return fetch(URL + links.saveTrip, options).then(handleHttpErrors);
@@ -145,6 +149,7 @@ function apiFacade() {
     getActivUser,
     fetchDataNOTOken,
     fetchCities,
+    findFlightSets,
   };
 }
 const facade = apiFacade();

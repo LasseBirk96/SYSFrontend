@@ -7,7 +7,8 @@ function URL() {
     saveTrip: "/api/flight/savetrip",
     countries: "/api/zomato/countries",
     restaurant: "/api/zomato/search",
-    cities: "/api/zomato/citylist"
+    cities: "/api/zomato/citylist",
+    flightsets: "/api/flight/flightset",
   };
 }
 const url = URL();
