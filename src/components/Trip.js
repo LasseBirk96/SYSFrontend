@@ -16,9 +16,42 @@ export default function Trip({
   setRestaurants,
 }) {
   const history = useHistory();
-
+  const initRes1 = {
+    id: "11651616",
+    name: "Molatka",
+    location: {
+      address: "21 1 Avenue 10003",
+      city: "Other City",
+      latitude: "55.62905",
+      longitude: "12.647601",
+      zipcode: "10003",
+    },
+  };
+  const initRes2 = {
+    id: "16780467",
+    name: "Veselka",
+    location: {
+      address: "144 2nd Avenue 10003",
+      city: "New York City",
+      latitude: "40.728",
+      longitude: "-73.987",
+      zipcode: "10003",
+    },
+  };
+  const tmpList = [initRes1, initRes2, initRes1, initRes2];
   let count = 0;
   const [msg, setMsg] = useState("");
+
+  var countId = 1;
+  function getImgID() {
+    if (countId === 32) {
+      countId = 1;
+    }
+    const tmp = countId;
+    countId++;
+    return tmp;
+  }
+
   const [output, setOutput] = useState(
     <div className="container-fluid">
       <div className="row">
@@ -26,7 +59,7 @@ export default function Trip({
           <div className="row">
             <div className="col-2"></div>
             <div className="col-md-12 col-xl-8">
-              {flights.length < 1 && restaurants.length < 1 ? (
+              {flights.length < 1 && tmpList.length < 1 ? (
                 <div
                   className="logo"
                   style={{
@@ -84,13 +117,13 @@ export default function Trip({
                     style={{ textAlign: "center" }}
                     key={set.id}
                   >
-                    {set.flights.map((f) => 
+                    {set.flights.map((f) => (
                       <Flight
                         flight={f}
                         airports={airports}
                         key={f.flight + count++}
                       />
-                    )}
+                    ))}
                   </div>
                 ))}
               </div>
@@ -100,30 +133,38 @@ export default function Trip({
         </div>
         <div className="col-xl-6 col-md-12">
           <div className="col-12">
-            <div className="tripElement">
-              {restaurants.length < 1 ? (
-                <div style={{ textAlign: "center" }}>
-                  Hungry for new experiences?
-                  <button
-                    className="tripElement"
-                    style={{
-                      color: "rgb(0, 217, 255)",
-                      fontWeight: "bold",
-                      backgroundColor: "#150327",
-                      marginLeft: "5%",
-                    }}
-                  >
-                    <div className="logo">EAT!</div>
-                  </button>
-                </div>
-              ) : (
-                <h3 style={{ color: "rgb(0, 217, 255)" }}>Your flights</h3>
-              )}
-              {restaurants.map((r) => (
-                <div className="tripElement">
-                  <Restaurant restaurant={r} key={"r" + count++} />
-                </div>
-              ))}
+            <div className="tripElement" key="restaurants">
+              <div className="row">
+                {restaurants.length < 1 ? (
+                  <div className="col-xl-12" style={{ textAlign: "center" }}>
+                    Hungry for new experiences?
+                    <button
+                      className="tripElement"
+                      style={{
+                        color: "rgb(0, 217, 255)",
+                        fontWeight: "bold",
+                        backgroundColor: "#150327",
+                        marginLeft: "5%",
+                      }}
+                    >
+                      <div className="logo">EAT!</div>
+                    </button>
+                  </div>
+                ) : (
+                  <h3 style={{ color: "rgb(0, 217, 255)" }}>Your flights</h3>
+                )}
+                {tmpList.map((r) => (
+                  <div className="col-md-12 col-xl-6">
+                    <div className="tripElement" key="resList">
+                      <Restaurant
+                        restaurant={r}
+                        key={"r" + r.id}
+                        imgId={getImgID()}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
