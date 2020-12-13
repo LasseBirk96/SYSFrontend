@@ -82,6 +82,10 @@ function apiFacade() {
     const options = makeOptions("POST", false, country);
     return fetch(URL + links.cities, options).then(handleHttpErrors);
   };
+  const fetchCityData = (city_id) => {
+    const options = makeOptions("POST", false, city_id);
+    return fetch(URL + links.cityData, options).then(handleHttpErrors);
+  };
 
   //https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/
   function setWithExpiry(key, value, ttl) {
@@ -150,6 +154,7 @@ function apiFacade() {
     fetchDataNOTOken,
     fetchCities,
     findFlightSets,
+    fetchCityData,
   };
 }
 const facade = apiFacade();

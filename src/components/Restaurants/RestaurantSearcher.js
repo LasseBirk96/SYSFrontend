@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import facade from "../../apiFacade";
 import links from "../../settings";
 import "../../Css-files/flight.css";
+import { getSuggestedQuery } from "@testing-library/react";
 
 export default function RestauranSearcher() {
   const loader = <div className="loader"></div>;
@@ -15,9 +16,17 @@ export default function RestauranSearcher() {
   const [loadingCities, setLoadingCities] = useState(false);
   const [showCityInput, setShowCityInput] = useState(false);
   const [citiesOfCountry, setCitysOfCountry] = useState([]);
-
   const [cityInputTarget, setCityTarget] = useState(null);
   const [cityOptions, setCityOptions] = useState([]);
+  const [chosenCity, setChosenCity] = useState([null])
+  const [showCityDataInput, setShowCityDataInput] = useState(false)
+  const [loadingCityData, setLoadingCityData] = useState(false)
+  const [cityDataOfCities, setCityDataOfCities] = useState([])
+  const [fetchCityData, setFetchCityData] = useState(false)
+  const [cuisines, setCuisines] = useState([])
+  const [cuisineInputTarget, setCuisineInputTarget] = useState(null)
+  const [cuisinesOfCity, setCuisinesOfCity] = useState([])
+ 
 
   useEffect(() => {
     let mounted = true;
@@ -202,8 +211,9 @@ export default function RestauranSearcher() {
       console.log(ciity_id);
     });
     cityInputTarget.value = e.currentTarget.value;
-
+    setChosenCity([ciity_id])
     setCityOptions([]);
+    setFetchCityData(true)
   }
 
   function clickOnInputCity(e) {
@@ -227,6 +237,103 @@ export default function RestauranSearcher() {
         ))
       );
     }
+    setCityDataOfCities([])
+  }
+
+  useEffect(() => {
+    if (fetchCityData) {
+      let mounted = true;
+      setShowCityDataInput(true);
+      setLoadingCityData(true);
+
+      facade
+        .fetchCityData(chosenCity)
+        .then((data) => {
+          let tmp = [];
+          data.forEach((city) => {
+            tmp.push(city);
+
+            cityDataOfCities.push(city);
+          });
+
+        })
+        .then(() => {
+          if (mounted) {
+            setLoadingCityData(false);
+            setFetchCityData(false);
+          }
+        })
+        .catch((err) => {
+          if (err.status) {
+            err.fullError.then((e) => console.log(e.message));
+          } else {
+            console.log("Network error! Could not load cities");
+          }
+        });
+      return function cleanup() {
+        mounted = false;
+      };
+    } else {
+    }
+  }, [fetchCityData]);
+
+  function filterCuisines(e) {
+
+    setSug([])
+    setCuisineInputTarget(e.target)
+    setCuisines([])
+    const input = e.target.value
+    if(input.length>0) {
+      cityDataOfCities.forEach((cd) => {
+        if (cd.name.toLowerCase().startsWith(input.toLowerCase)) {
+          sugestions.push(cd)
+
+          setCuisines(
+            sugestions.map((s) => (
+              <button
+                className="tableContent"
+                style={{ textAlign: "center", fontWeight: "bold" }}
+                value={s.name}
+                key={s.name}
+                id={s.id}
+                onClick={onClickCuisine}
+              >
+                {s.name}{" "}
+              </button>
+            ))
+          )
+        }
+      })
+    }
+    setCuisines(e.target)
+  }
+
+  function onClickCuisine(e) {
+    cuisineInputTarget.value = e.currentTarget.value
+    setCuisines([])
+  }
+
+  function clickOnInputCuisines(e) {
+    e.preventDefault();
+    setCuisines([]);
+    setCuisineInputTarget(e.target);
+    console.log(cuisineInputTarget);
+    if (e.target.value.length === 0) {
+      setCuisines(
+        cuisineInputTarget.map((s) => (
+          <button
+            className="tableContent"
+            style={{ textAlign: "center", fontWeight: "bold" }}
+            value={s.name}
+            key={s.name}
+            onClick={onClickCuisine}
+          >
+            {s.name}
+          </button>
+        ))
+      );
+    }
+    setCuisinesOfCity([])
   }
 
   return (
@@ -302,6 +409,39 @@ export default function RestauranSearcher() {
                                 style={{ listStyleType: "none" }}
                               >
                                 {cityOptions}
+                              </ul>
+                            </>
+                          )}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      {showCityDataInput ? (
+                        <>
+                          {loadingCityData ? (
+                            loader
+                          ) : (
+                            <>
+                              <input
+                                className="tableContent"
+                                type="text"
+                                id="city"
+                                key="city"
+                                placeholder={"City"}
+                                onChange={filterCuisines}
+                                onClick={(e) => {
+                                  setCuisineInputTarget(e.target);
+                                  if (cityInputTarget !== null) {
+                                    clickOnInputCuisines(e);
+                                  }
+                                }}
+                              />
+                              <div className="form-group"></div>
+                              <ul
+                                className="list-group"
+                                style={{ listStyleType: "none" }}
+                              >
+                                {cuisines}
                               </ul>
                             </>
                           )}
