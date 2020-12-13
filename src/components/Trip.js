@@ -14,6 +14,7 @@ export default function Trip({
   activUser,
   setFlights,
   setRestaurants,
+  deleteFlight,
 }) {
   const history = useHistory();
   const initRes1 = {
@@ -51,7 +52,7 @@ export default function Trip({
     countId++;
     return tmp;
   }
-
+  const flightsFromSets = [];
   const [output, setOutput] = useState(
     <div className="container-fluid">
       <div className="row">
@@ -112,18 +113,20 @@ export default function Trip({
                   <h3 className="userFlights">Your flights</h3>
                 )}
                 {flights.map((set) => (
-                  <div
-                    className="tripElement"
-                    style={{ textAlign: "center" }}
-                    key={set.id}
-                  >
-                    {set.flights.map((f) => (
-                      <Flight
-                        flight={f}
-                        airports={airports}
-                        key={f.flight + count++}
-                      />
-                    ))}
+                  <div className="col-xl-12" style={{ marginRight: 0 }}>
+                    <div
+                      className="tripElement"
+                      style={{ textAlign: "center", marginRight: 0 }}
+                      key={set.id}
+                    >
+                      {set.flights.map((f) => (
+                        <Flight
+                          flight={f}
+                          airports={airports}
+                          key={f.flight + count++}
+                        />
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -172,20 +175,29 @@ export default function Trip({
     </div>
   );
 
+  function makeSetsToFlights() {
+    flights.forEach((set) => {
+      set.flights.forEach((flight) => {
+        flightsFromSets.push(flight);
+      });
+    });
+  }
   function saveTrip(e) {
+    e.preventDefault();
+    makeSetsToFlights();
     if (loggedIn === false) {
       setOutput(<UnknownUser />);
     } else {
-      e.preventDefault();
       console.log("in saving");
       facade
         .saveTrip({
-          flights: flights,
+          flights: flightsFromSets,
           restaurants: restaurants,
           username: "user",
         })
         .then((data) => {
           setMsg(data);
+          console.log("data.msg");
           console.log(data.msg);
           setFlights([]);
           setRestaurants([]);

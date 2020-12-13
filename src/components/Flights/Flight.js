@@ -196,7 +196,7 @@ export default function Flight({ flight, airports, editButtons }) {
           <br />
           {getTimeDifference()}
         </div>
-        <div className="col-md-12 col-xl-1">{editButtons}</div>
+        <div className="col-md-12 col-xl-1"></div>
       </div>
     </div>
   );

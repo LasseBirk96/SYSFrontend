@@ -57,6 +57,24 @@ export default function Register({ facade, init, login }) {
         : setStatus("passwords did not match");
     }
   }
+
+  function logIn() {
+    setTimeout(function () {
+      if (monted) {
+        console.log("mounted");
+        console.log(newUser.username + " . " + newUser.password);
+        console.log(status);
+
+        history.push("/login");
+      }
+    }, 3000);
+    return function cleanup() {
+      setMonted(false);
+      setRegisterOk(true);
+    };
+  }
+
+  /*
   function logIn() {
     setTimeout(function () {
       if (monted) {
@@ -73,7 +91,7 @@ export default function Register({ facade, init, login }) {
       setMonted(false);
       setRegisterOk(true);
     };
-  }
+  }*/
 
   useEffect(logIn, [monted]);
 

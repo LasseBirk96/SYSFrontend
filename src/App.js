@@ -42,6 +42,15 @@ function App() {
   function addFlightToTrip(flight) {
     setFLights([...flights, flight]);
   }
+  function deleteFlightFromTrip(flight) {
+    console.log(flights);
+    for (var i = 0; i < flights.length; i++) {
+      if (flights[i] === flight) {
+        flights.splice(i, 1);
+      }
+    }
+    console.log(flights);
+  }
 
   function addRestaurantToTrip(restaurant) {
     setRestaurants([...restaurants, restaurant]);
@@ -87,6 +96,8 @@ function App() {
               setFlights={setFLights}
               loggedIn={loggedIn}
               activeUser={activeUser}
+              deleteFlight={deleteFlightFromTrip}
+              
             />
           </Route>
           <Route exact path="/restaurant">

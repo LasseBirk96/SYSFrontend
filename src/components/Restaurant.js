@@ -69,17 +69,7 @@ export default function Restaurant({ restaurant, imgId }) {
   const lat = parseFloat(restaurant.location.latitude);
   const lon = parseFloat(restaurant.location.longitude);
   const locationn = { lat: lat, lng: lon };
-  const init = {
-    id: "16780467",
-    name: "Veselka",
-    location: {
-      address: "144 2nd Avenue 12",
-      city: "New York City",
-      latitude: "40.7287300000",
-      longitude: "-73.9870800000",
-      zipcode: "10003",
-    },
-  };
+
   return (
     <div className="col-xl-12 col-xl-6">
       <img src={imgArr[imgId - 1]} style={{ maxWidth: 250 }} />
@@ -102,7 +92,6 @@ export default function Restaurant({ restaurant, imgId }) {
           color: "rgb(140, 110, 140",
           fontWeight: "400",
           textAlign: "center",
-          
         }}
       >
         {restaurant.location.address}

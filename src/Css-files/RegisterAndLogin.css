@@ -20,7 +20,7 @@
   position: absolute;
   left: 50%;
   top: 35%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -0%);
   width: 450px;
   height: 450px;
 }
