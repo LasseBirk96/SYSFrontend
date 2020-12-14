@@ -88,47 +88,41 @@ export default function Header({
       {!admin ? (
         <li>
           <NavLink activeClassName="active" to="/trip">
-            <div style={{ width: "10%" }}>
+            <div>
               <div
                 className="container-fluid"
                 style={{ backgroundImage: imgTrip }}
               >
                 <div
+                  className="row"
                   style={{
                     marginBottom: "-15px",
-                    textAlign: "right",
+                    textAlign: "center",
                     color: "rgb(0, 217, 255)",
                   }}
                 >
                   Trip
-                </div>{" "}
+                </div>
                 <div className="row">
-                  <img
-                    src={imgTrip}
-                    style={{ alignSelf: "right" }}
-                    height={55}
-                  />
+                  <div className="col-xl-12">
+                    <img
+                      src={imgTrip}
+                      style={{ alignSelf: "right" }}
+                      height={55}
+                    />
+                  </div>
                 </div>
                 <div className="row">
                   <div
-                    className="col-6"
+                    className="col-xl-12"
                     style={{
                       marginTop: "-15px",
-                      textAlign: "left",
+                      textAlign: "center",
                       color: "rgb(0, 217, 255)",
                     }}
                   >
-                    {fquantity < 1 ? "" : fquantity}
-                  </div>
-                  <div
-                    className="col-6"
-                    style={{
-                      marginTop: "-15px",
-                      textAlign: "right",
-                      color: "rgb(0, 217, 255)",
-                    }}
-                  >
-                    {rquantity < 1 ? "" : rquantity}
+                    {fquantity < 1 ? " " : "F: " + fquantity} {"..."}
+                    {rquantity < 1 ? " " : "   R: " + rquantity}
                   </div>
                 </div>
               </div>

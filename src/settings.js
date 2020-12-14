@@ -9,7 +9,8 @@ function URL() {
     restaurant: "/api/zomato/search",
     cities: "/api/zomato/citylist",
     flightsets: "/api/flight/flightset",
-    cityData: "/api/zomato/citydata"
+    cityData: "/api/zomato/citydata",
+    categories: "/api/zomato/categories",
   };
 }
 const url = URL();

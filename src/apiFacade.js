@@ -87,6 +87,11 @@ function apiFacade() {
     return fetch(URL + links.cityData, options).then(handleHttpErrors);
   };
 
+  const searchRestaurants = (request) => {
+    const options = makeOptions("POST", false, request);
+    return fetch(URL + links.restaurant, options).then(handleHttpErrors);
+  };
+
   //https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/
   function setWithExpiry(key, value, ttl) {
     const now = new Date();
@@ -155,6 +160,7 @@ function apiFacade() {
     fetchCities,
     findFlightSets,
     fetchCityData,
+    searchRestaurants,
   };
 }
 const facade = apiFacade();

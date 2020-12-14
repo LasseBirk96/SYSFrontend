@@ -51,9 +51,14 @@ function App() {
     }
     console.log(flights);
   }
-
+  const [restLengtht, setRestL] = useState(0);
   function addRestaurantToTrip(restaurant) {
-    setRestaurants([...restaurants, restaurant]);
+    console.log("In App.js add rest:");
+    console.log(restaurant);
+    restaurants.push(restaurant);
+    setRestaurants(restaurants);
+    console.log(restaurants);
+    setRestL(restaurants.length);
   }
 
   function whosLoggedIn() {
@@ -76,7 +81,7 @@ function App() {
           loggedIn={loggedIn}
           admin={admin}
           logout={logout}
-          rquantity={restaurants.length}
+          rquantity={restLengtht}
           fquantity={flights.length}
           activUser={activeUser}
         />
@@ -97,7 +102,6 @@ function App() {
               loggedIn={loggedIn}
               activeUser={activeUser}
               deleteFlight={deleteFlightFromTrip}
-              
             />
           </Route>
           <Route exact path="/restaurant">

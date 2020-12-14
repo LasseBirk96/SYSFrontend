@@ -154,9 +154,13 @@ export default function Trip({
                     </button>
                   </div>
                 ) : (
-                  <h3 style={{ color: "rgb(0, 217, 255)" }}>Your flights</h3>
+                  <div className="col-xl-12 ">
+                    <h3 style={{ color: "rgb(0, 217, 255)" }}>
+                      Your restaurants
+                    </h3>
+                  </div>
                 )}
-                {tmpList.map((r) => (
+                {restaurants.map((r) => (
                   <div className="col-md-12 col-xl-6">
                     <div className="tripElement" key="resList">
                       <Restaurant
